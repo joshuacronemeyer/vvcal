@@ -1,4 +1,77 @@
 <head>
+	<script type="text/javascript"
+	  src="http://www.google.com/jsapi?key=ABQIAAAADRnyuq2mdBHBb4iDhmtuZBQM-KuWdanIH38iecu_8v3ev4H-ExS0xaUAQQ_5vEh_jAbxnNm5CqTd2Q">
+	  google.load("gdata", "1");
+	  google.setOnLoadCallback(getMyFeed);
+
+	  var feedUrl =  "http://www.google.com/calendar/feeds/ctan@thoughtworks.com/private/full";
+
+	  function logMeIn() {
+	    scope = "http://www.google.com/calendar/feeds";
+	    var token = google.accounts.user.login(scope);
+	  }
+
+	  function setupMyService() {
+	    var myService =
+	      new google.gdata.calendar.CalendarService('exampleCo-exampleApp-1');
+	    logMeIn();
+	    return myService;
+	  }
+
+	  function getMyFeed() {
+	    myService = setupMyService();
+
+	    myService.getEventsFeed(feedUrl, handleMyFeed, handleError);
+      }
+
+	  function handleMyFeed(myResultsFeedRoot) {
+	    alert("This feed's title is: " +
+	      myResultsFeedRoot.feed.getTitle().getText());
+	    insertIntoMyFeed(myResultsFeedRoot);
+	  }
+
+
+	  function insertIntoMyFeed(feedRoot) {
+	    var newEntry = new google.gdata.calendar.CalendarEventEntry({
+	      authors: [
+	        {
+	          name: "Elizabeth Bennet",
+	          email: "liz@gmail.com"
+	        }
+	      ],
+	      title: {type: 'text', text: 'Tennis with Darcy'},
+	      content: {type: 'text', text: 'Meet for a quick lesson'},
+	      locations: [
+	        {
+	          rel: "g.event",
+	          label: "Event location",
+	          valueString: "Netherfield Park tennis court"
+	        }
+	      ],
+	      times: [
+	        {
+	          startTime:
+	            google.gdata.DateTime.fromIso8601("2007-09-23T18:00:00.000Z"),
+	          endTime:
+	            google.gdata.DateTime.fromIso8601("2007-09-23T19:00:00.000Z")
+	        }
+	      ]
+	      }
+	    );
+	    feedRoot.feed.insertEntry(newEntry, handleMyInsertedEntry, handleError);
+	  }
+
+
+	  function handleError(e) {
+	    alert("There was an error!");
+	    alert(e.cause ? e.cause.statusText : e.message);
+	  }
+
+	  function logMeOut() {
+	    google.accounts.user.logout();
+	  }
+	</script>
+
 	<script type="text/javascript" src="calendarDateInput.js">
 
 	/***********************************************
@@ -8,39 +81,53 @@
 	***********************************************/
 
 	</script>
-	<script>
-		function addEvent() {
-
-			alert("dasadasdassdasdasdadasda");
-		  var newEntry = new google.gdata.calendar.CalendarEventEntry({
-			title: {type: 'text', text: name + " - " + village },
-			content: {type: 'text', text: ''},
-			locations: [
-			  {
-				rel: "g.event",
-				label: "Event location",
-				valueString: "Netherfield Park tennis court"
-			  }
-			],
-			times: [
-			  {
-				startTime:
-				  google.gdata.DateTime.fromIso8601(startDate + "T18:00:00.000Z")
-				endTime:
-				  google.gdata.DateTime.fromIso8601(endDate + "T18:00:00.000Z")
-			  }
-			]
-			}
-		  );
-		  feedRoot.feed.insertEntry(newEntry, handleMyInsertedEntry, handleError);
-		}
-	</script>
 </head>
 <body>
 	<table width="1100" cellspacing=0 cellpadding=0>
 	<tr>
 		<td width="300" valign="top">
-			<form action="" onsubmit="addEvent()" id="embed_form">
+		<table width="300" valign="top">
+			<tr>
+				<td>
+					<div><b>Volunteer: </b><input name="name" value="" id="name" size="30"></div>
+					<div>&nbsp;</div>
+
+				</td>
+			</tr>
+			<tr>
+				<td><div><u>Contact Information</u></div>
+				<div>Email: ctan@thoughtworks.com</div>
+				<div>Phone: 312-555-5555</div>
+				<div>&nbsp;</div>
+				<div><u>Itinerary</u></div>
+				<div>Village A - October 7 - October 31</div>
+				</td>
+			</tr>
+			<tr><td><hr width="80%"></td</tr>
+			<tr>
+				<td>
+					<div><b>Village Information</b></div>
+					<div>Date</div>
+					<div><script>DateInput('date', true, 'YYYY-MM-DD')</script></div>
+				</td>
+			</tr>
+			<tr><td><hr width="80%"></td</tr>
+			<tr>
+				<td><u>Village A (2/6)</u><br>
+				Jimmy Staggs<br>
+				Charlotte Tan<br>
+			</td>
+			</tr>
+			<tr><td><hr width="80%"></td</tr>
+			<tr>
+				<td><u>Village B (12/6)</u><br>
+				Jeremy Stitz<br>
+			</td>
+			</tr>
+		</table>
+		</td>
+
+<!--			<form action="" onsubmit="addEvent()" id="embed_form">
 
 			<div>Volunteer Name</div>
 			<div><input name="name" value="" id="name" size="30"></div>
@@ -52,10 +139,10 @@
 			<script>DateInput('endDate', true, 'YYYY-MM-DD')</script>
 			<div align="center"><input type="submit" value="add event"></div>
 
-			</form>
-		</td>
+			</form>-->
 		<td width="800">
-			<iframe src="http://www.google.com/calendar/embed?showTitle=0&amp;height=600&amp;wkst=1&amp;bgcolor=%23FFFFFF&amp;src=ctan%40thoughtworks.com&amp;color=%23A32929&amp;src=u2ej9tfbcfcpnd6dge4bjhlv5g%40group.calendar.google.com&amp;color=%2329527A&amp;src=kjvc0g6djih8d6kv7j305e3gvk%40group.calendar.google.com&amp;color=%23B1365F" style=" border-width:0 " width="800" height="600" frameborder="0" scrolling="no"></iframe>
+			<!--<iframe src="http://www.google.com/calendar/embed?showTitle=0&amp;height=600&amp;wkst=1&amp;bgcolor=%23FFFFFF&amp;src=ctan%40thoughtworks.com&amp;color=%23A32929&amp;src=u2ej9tfbcfcpnd6dge4bjhlv5g%40group.calendar.google.com&amp;color=%2329527A&amp;src=kjvc0g6djih8d6kv7j305e3gvk%40group.calendar.google.com&amp;color=%23B1365F" style=" border-width:0 " width="800" height="600" frameborder="0" scrolling="no"></iframe>-->
+			<iframe src="http://www.google.com/calendar/render" width="1000" height="800"></iframe>
 		</td>
 	</tr>
 	</table>
