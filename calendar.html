@@ -1,0 +1,62 @@
+<head>
+	<script type="text/javascript" src="calendarDateInput.js">
+
+	/***********************************************
+	* Jason's Date Input Calendar- By Jason Moon http://calendar.moonscript.com/dateinput.cfm
+	* Script featured on and available at http://www.dynamicdrive.com
+	* Keep this notice intact for use.
+	***********************************************/
+
+	</script>
+	<script>
+		function addEvent() {
+
+			alert("dasadasdassdasdasdadasda");
+		  var newEntry = new google.gdata.calendar.CalendarEventEntry({
+			title: {type: 'text', text: name + " - " + village },
+			content: {type: 'text', text: ''},
+			locations: [
+			  {
+				rel: "g.event",
+				label: "Event location",
+				valueString: "Netherfield Park tennis court"
+			  }
+			],
+			times: [
+			  {
+				startTime:
+				  google.gdata.DateTime.fromIso8601(startDate + "T18:00:00.000Z")
+				endTime:
+				  google.gdata.DateTime.fromIso8601(endDate + "T18:00:00.000Z")
+			  }
+			]
+			}
+		  );
+		  feedRoot.feed.insertEntry(newEntry, handleMyInsertedEntry, handleError);
+		}
+	</script>
+</head>
+<body>
+	<table width="1100" cellspacing=0 cellpadding=0>
+	<tr>
+		<td width="300" valign="top">
+			<form action="" onsubmit="addEvent()" id="embed_form">
+
+			<div>Volunteer Name</div>
+			<div><input name="name" value="" id="name" size="30"></div>
+			<div>Village Name</div>
+			<div><input name="village" value="" id="village" size="30"></div>
+			<div>Start Date</div>
+			<script>DateInput('startDate', true, 'YYYY-MM-DD')</script>
+			<div>End Date</div>
+			<script>DateInput('endDate', true, 'YYYY-MM-DD')</script>
+			<div align="center"><input type="submit" value="add event"></div>
+
+			</form>
+		</td>
+		<td width="800">
+			<iframe src="http://www.google.com/calendar/embed?showTitle=0&amp;height=600&amp;wkst=1&amp;bgcolor=%23FFFFFF&amp;src=ctan%40thoughtworks.com&amp;color=%23A32929&amp;src=u2ej9tfbcfcpnd6dge4bjhlv5g%40group.calendar.google.com&amp;color=%2329527A&amp;src=kjvc0g6djih8d6kv7j305e3gvk%40group.calendar.google.com&amp;color=%23B1365F" style=" border-width:0 " width="800" height="600" frameborder="0" scrolling="no"></iframe>
+		</td>
+	</tr>
+	</table>
+</body>
