@@ -1,4 +1,3 @@
-#labels Phase-Requirements,UserStoryV1
 #V1: I would like to pull contact information from the contact database so that I can contact a volunteer.
 
 = Priority =
