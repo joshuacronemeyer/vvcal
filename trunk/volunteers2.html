@@ -1,0 +1,54 @@
+<script type="text/javascript" src="http://www.google.com/jsapi?key=ABQIAAAADRnyuq2mdBHBb4iDhmtuZBQM-KuWdanIH38iecu_8v3ev4H-ExS0xaUAQQ_5vEh_jAbxnNm5CqTd2Q"></script>
+<script type="text/javascript">
+
+google.load("gdata", "1");
+
+var calendarsUrl = 'http://www.google.com/calendar/feeds/default/allcalendars/full';
+
+function setupMyService() {
+  var myService = new google.gdata.calendar.CalendarService('vvcal');
+
+  logMeIn();
+
+  return myService;
+}
+
+function getMyFeed() {
+  myService = setupMyService();
+
+  myService.getCalendarsFeed(calendarsUrl, handleCalendarCallback, handleError);
+}
+
+
+function handleError(e) {
+	alert(e.cause ? e.cause.statusText : e.message);
+}
+
+function handleCalendarCallback(root) {
+  	calendars = root.feed.getEntries();
+
+  	for(i = 0; i < calendars.length; i++)
+  	{
+  		alert("Events for: " + calendars[i].getTitle().getText());
+
+		document.write(calendars[i].getLink().getHref() + "<br>");
+
+  		myService.getEventsFeed(calendars[i].getLink().getHref(), handleEventCallback,handleError);
+  	}
+}
+
+function handleEventCallback(root) {
+	alert("asdsadsadasdas");
+}
+
+function logMeIn() {
+  scope = "http://www.google.com/calendar/feeds";
+
+  var token = google.accounts.user.login(scope);
+}
+
+google.setOnLoadCallback(getMyFeed);
+</script>
+<div id="calendarTitle"></div>
+<div id="events"></div>
+<img src="./images/calendar.jpg">
