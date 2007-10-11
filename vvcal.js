@@ -1,4 +1,6 @@
-http://www.google.com/jsapi?key=ABQIAAAADRnyuq2mdBHBb4iDhmtuZBQM-KuWdanIH38iecu_8v3ev4H-ExS0xaUAQQ_5vEh_jAbxnNm5CqTd2Q
+
+//<![CDATA[
+
 google.load("gdata", "1");
 google.setOnLoadCallback(getMyFeed);
 
@@ -18,7 +20,6 @@ function setupMyService() {
 
 function getMyFeed() {
   myService = setupMyService();
-
   myService.getEventsFeed(feedUrl, handleMyFeed, handleError);
 }
 
@@ -28,38 +29,6 @@ function handleMyFeed(myResultsFeedRoot) {
   insertIntoMyFeed(myResultsFeedRoot);
 }
 
-
-function insertIntoMyFeed(feedRoot) {
-  var newEntry = new google.gdata.calendar.CalendarEventEntry({
-    authors: [
-      {
-        name: "Elizabeth Bennet",
-        email: "liz@gmail.com"
-      }
-    ],
-    title: {type: 'text', text: 'Tennis with Darcy'},
-    content: {type: 'text', text: 'Meet for a quick lesson'},
-    locations: [
-      {
-        rel: "g.event",
-        label: "Event location",
-        valueString: "Netherfield Park tennis court"
-      }
-    ],
-    times: [
-      {
-        startTime:
-          google.gdata.DateTime.fromIso8601("2007-09-23T18:00:00.000Z"),
-        endTime:
-          google.gdata.DateTime.fromIso8601("2007-09-23T19:00:00.000Z")
-      }
-    ]
-    }
-  );
-  feedRoot.feed.insertEntry(newEntry, handleMyInsertedEntry, handleError);
-}
-
-
 function handleError(e) {
   alert("There was an error!");
   alert(e.cause ? e.cause.statusText : e.message);
@@ -68,3 +37,5 @@ function handleError(e) {
 function logMeOut() {
   google.accounts.user.logout();
 }
+
+//]]>
