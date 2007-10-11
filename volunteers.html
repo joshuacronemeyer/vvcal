@@ -1,7 +1,68 @@
 <html>
-<head></head>
+<head>
+	<script src="http://www.google.com/jsapi?key=ABQIAAAADRnyuq2mdBHBb4iDhmtuZBQM-KuWdanIH38iecu_8v3ev4H-ExS0xaUAQQ_5vEh_jAbxnNm5CqTd2Q" type="text/javascript"></script>
+
+	<script type="text/javascript" src="calendarDateInput.js">
+
+	/***********************************************
+	* Jason's Date Input Calendar- By Jason Moon http://calendar.moonscript.com/dateinput.cfm
+	* Script featured on and available at http://www.dynamicdrive.com
+	* Keep this notice intact for use.
+	***********************************************/
+
+
+	</script>
+</head>
 <body>
-	<center><b>VOLUNTEERS</b></center>
-	<br><br><br><br><br><br><br><br>
+	<center><b>VOLUNTEERS</b></center><br>
+
+		<table valign="top">
+			<tr>
+				<td>
+					<div><b>Volunteer: </b>
+					<select name="name">
+					<option value="0" selected>(please select:)</option>
+					<script type="text/javascript">
+						for (i in volunteers)
+						{
+						document.write("<option value='" + volunteers[i].firstname + " " + volunteers[i].lastname + "'>" + volunteers[i].firstname + " " + volunteers[i].lastname + "</option>")
+						}
+					</script>
+					</select></div>
+					<div>&nbsp;</div>
+
+				</td>
+			</tr>
+			<tr>
+				<td><div><u>Contact Information</u></div>
+				<div>Email: ctan@thoughtworks.com</div>
+				<div>Phone: 312-555-5555</div>
+				<div>&nbsp;</div>
+				<div><u>Itinerary</u></div>
+				<div>Village A - October 7 - October 31</div>
+				</td>
+			</tr>
+			<tr><td><hr width="80%"></td</tr>
+			<tr>
+				<td>
+					<div><b>Village Information</b></div>
+					<div>Date</div>
+					<div><script>DateInput('date', true, 'YYYY-MM-DD')</script></div>
+				</td>
+			</tr>
+			<tr><td><hr width="80%"></td</tr>
+			<tr>
+				<td><u>Village A (2/6)</u><br>
+				Jimmy Staggs<br>
+				Charlotte Tan<br>
+			</td>
+			</tr>
+			<tr><td><hr width="80%"></td</tr>
+			<tr>
+				<td><u>Village B (12/6)</u><br>
+				Jeremy Stitz<br>
+			</td>
+			</tr>
+	</table>
 </body>
 </html
