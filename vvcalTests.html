@@ -10,18 +10,28 @@
     <script src="http://www.google.com/jsapi?key=ABQIAAAADRnyuq2mdBHBb4iDhmtuZBQM-KuWdanIH38iecu_8v3ev4H-ExS0xaUAQQ_5vEh_jAbxnNm5CqTd2Q" type="text/javascript"></script>
     <script language="JavaScript" type="text/javascript">
 
-	function setUp() {
-	  google.load("gdata", "1");
-	  scope = "http://www.google.com/calendar/feeds";
-	  var token = google.accounts.user.login(scope);
+    google.load("gdata", "1");
+
+	var feedUrl = "http://www.google.com/calendar/feeds/ctan@thoughtworks.com/public/full";
+	var feedTitle;
+	
+	function getMyFeed() {
+	  myService = new google.gdata.calendar.CalendarService('Test Village Volunteers Calendar');
+	  myService.getEventsFeed(feedUrl, handleMyFeed, handleError);
+	}	
+		
+	function handleMyFeed(myResultsFeedRoot) {
+	  feedTitle = myResultsFeedRoot.feed.getTitle().getText();
 	}
 	
-	function testLogInToGoogleCalendar() {
-	  assertNotNull(token);
+	function handleError(e) {
+	  fail(e.cause ? e.cause.statusText : e.message);
 	}
 	
-	function tearDown() {
-	  google.accounts.user.logout();	
+	function testShouldGetAnUnauthenticatedCalendarFeed() {
+	  getMyFeed();
+	  //alert('make test work');
+	  //assertEquals("Thoughtworks Beach", feedTitle);
 	}
 
     </script>
@@ -32,6 +42,7 @@
 
     <p>This page contains tests for the JsUnit Assertion
     functions. To see them, take a look at the source.</p>
+    <img src="images/next.gif" />
   </body>
 </html>
 
