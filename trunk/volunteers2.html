@@ -33,12 +33,12 @@ function handleCalendarCallback(root) {
 
 		document.write(calendars[i].getLink().getHref() + "<br>");
 
-  		myService.getEventsFeed(calendars[i].getLink().getHref(), handleEventCallback,handleError);
+  		myService.getEventsFeed(calendars[i].getLink().getHref(), handleEventCallback, handleError);
   	}
 }
 
 function handleEventCallback(root) {
-	alert("asdsadsadasdas");
+	alert("Found an Event!");
 }
 
 function logMeIn() {
