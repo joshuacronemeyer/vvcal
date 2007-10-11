@@ -5,22 +5,24 @@
   <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>JsUnit Assertion Tests</title>
-    <link rel="stylesheet" type="text/css" href="../css/jsUnitStyle.css">
-    <script src="http://www.google.com/jsapi?key=ABQIAAAADRnyuq2mdBHBb4iDhmtuZBQM-KuWdanIH38iecu_8v3ev4H-ExS0xaUAQQ_5vEh_jAbxnNm5CqTd2Q" type="text/javascript"></script>
     <script language="JavaScript" type="text/javascript" src="jsunit/jsUnitCore.js"></script>
+
+    <script src="http://www.google.com/jsapi?key=ABQIAAAADRnyuq2mdBHBb4iDhmtuZBQM-KuWdanIH38iecu_8v3ev4H-ExS0xaUAQQ_5vEh_jAbxnNm5CqTd2Q" type="text/javascript"></script>
     <script language="JavaScript" type="text/javascript">
 
-// JsUnit Assertion Tests
-
-function setUp() {
-  scope = "http://www.google.com/calendar/feeds";
-  var token = google.accounts.user.login(scope);
-}
-
-function testLogInToGoogleCalendar() {
-  setUp();
-  assertNotNull(token);
-}
+	function setUp() {
+	  google.load("gdata", "1");
+	  scope = "http://www.google.com/calendar/feeds";
+	  var token = google.accounts.user.login(scope);
+	}
+	
+	function testLogInToGoogleCalendar() {
+	  assertNotNull(token);
+	}
+	
+	function tearDown() {
+	  google.accounts.user.logout();	
+	}
 
     </script>
   </head>
