@@ -34,7 +34,15 @@ function handleEventsFeed(myResultsFeedRoot) {
 
   events = myEventsFeed.getEntries();
 
-  document.write("Found '" + events.length + "' events.");
+  document.write("Found '" + events.length + "' calendars. <br>");
+
+  var i;
+  for (i = 0; i < events.length; i++){
+  	  document.write(events[i].getTitle().getText() + "<br>");
+  	  document.write("Events<br>");
+  	  document.write(myService.getEventsFeed(events[i].getLink().getHref(),handleEventsFeed, handleError) + "<br>");
+
+  }
 }
 
 function handleError(e) {
