@@ -1,70 +1,15 @@
-<script type="text/javascript" src="http://www.google.com/jsapi?ABQIAAAAKYmOqEXuSTJLmIQnR5PK0BT2yXp_ZAY8_ufC3CFXhHIE1NvwkxRY1xD4kh0qjbX_xcdZnGjjKoA4cA"></script>
-<script type="text/javascript">
-
-google.load("gdata", "1");
-google.setOnLoadCallback(init);
-
-var SCOPE = "http://www.google.com/calendar/feeds";
-var FEED = 'http://www.google.com/calendar/feeds/default/owncalendars/full';
-
-var myService;
-var myEventsFeed;
-var myCalendarsFeed;
-
-function init() {
-  google.gdata.client.init(handleError);
-
-  var token = google.accounts.user.checkLogin(FEED);
-
-  myService = new google.gdata.calendar.CalendarService("VillageVolunteersCalendar");
-}
-
-function login() {
-  var token = google.accounts.user.login(FEED);
-}
-
-function getEvents() {
-  var query = new google.gdata.calendar.CalendarEventQuery(FEED);
-
-  myService.getEventsFeed(query, handleEventsFeed, handleError);
-}
-
-function handleEventsFeed(myResultsFeedRoot) {
-  myEventsFeed = myResultsFeedRoot.feed;
-
-  events = myEventsFeed.getEntries();
-
-  document.write("Found '" + events.length + "' calendars. <br>");
-
-  var i;
-  for (i = 0; i < events.length; i++){
-  	  document.write(events[i].getTitle().getText() + "<br>");
-  	  document.write("Events<br>");
-  	  document.write(myService.getEventsFeed(events[i].getLink().getHref(),handleEventsFeed, handleError) + "<br>");
-
-  }
-}
-
-function handleError(e) {
-  if (e instanceof Error) {
-
-    alert('Error at line ' + e.lineNumber + ' in ' + e.fileName + '\n' + 'Message: ' + e.message);
-
-    if (e.cause) {
-      var errorStatus = e.cause.status;
-      var statusText = e.cause.statusText;
-
-      alert('Root cause: HTTP error ' + errorStatus + ' with status text of: ' + statusText);
-    }
-  } else {
-    alert(e.toString());
-  }
-}
-
-</script>
-
-<img src="./images/calendar.jpg">
-<br><br>
-<input type="button" value="Login" onclick="login()" />
-<br><br>
-<input type="button" value="Events" onclick="getEvents()" />
+<html>
+<head>
+  <script type="text/javascript" src="http://www.google.com/jsapi?ABQIAAAAKYmOqEXuSTJLmIQnR5PK0BT2yXp_ZAY8_ufC3CFXhHIE1NvwkxRY1xD4kh0qjbX_xcdZnGjjKoA4cA"></script>
+  <script type="text/javascript" src="volunteers2.js">
+</head>
+<body>
+  <img src="./images/calendar.jpg">
+  <br><br>
+  <input type="button" value="Login" onclick="login()" />
+  <br><br>
+  <input type="button" value="Events" onclick="getInfo()" />
+  <br><br>
+  <b>Events:</b><div id="divEvents" name="test">&nbsp;</div>
+</body>
+</html>
