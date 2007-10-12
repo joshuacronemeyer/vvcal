@@ -52,7 +52,6 @@ function handleAllCalendarsForVillages(feedRoot) {
 }
 
 function handleVillageItinerary(feedRoot) {
-  alert("hi! in handleVillageItinerary!");
   var entries = feedRoot.feed.getEntries();
   var foundMatchingEntries = false;
   for (var i = 0; i < entries.length; i++) {
