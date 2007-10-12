@@ -1,3 +1,5 @@
+<html>
+<head>
 <script type="text/javascript" src="http://www.google.com/jsapi?key=ABQIAAAAKYmOqEXuSTJLmIQnR5PK0BT2yXp_ZAY8_ufC3CFXhHIE1NvwkxRY1xD4kh0qjbX_xcdZnGjjKoA4cA"></script>
 <script type="text/javascript">
 
@@ -5,6 +7,9 @@ google.load("gdata", "1");
 google.setOnLoadCallback(getMyFeed);
 
 var calendarsUrl = 'http://www.google.com/calendar/feeds/default/allcalendars/full';
+//var calendarsUrl = 'http://www.google.com/calendar/feeds/ctan@thoughtworks.com/public/full';
+//var calendarsUrl = 'http://www.google.com/calendar/feeds/u2ej9tfbcfcpnd6dge4bjhlv5g%40group.calendar.google.com/private/full';
+
 var myService;
 
 function getMyFeed() {
@@ -21,11 +26,19 @@ function logMeIn() {
 function handleCalendarCallback(root) {
   	calendars = root.feed.getEntries();
 
+    if (google.accounts.user.checkLogin("http://www.google.com/calendar/feeds") != "") {
+      google.accounts.user.getInfo(handleInfo);
+    } else {
+      document.write("token is broken<br />");
+    }
+    
   	for(i = 0; i < calendars.length; i++)
   	{
 		document.write(calendars[i].getLink().getHref() + "<br />");
   		myService.getEventsFeed(calendars[i].getLink().getHref(), handleEventCallback,handleError);
   	}
+  	
+  	google.accounts.user.logout();
 }
 
 function handleEventCallback(root) {
@@ -37,7 +50,17 @@ function handleError(e) {
 	alert(e.cause ? e.cause.statusText : e.message);
 }
 
+
+
+function handleInfo(info) {
+  document.write(info.target + "<br />");
+  document.write(info.scope + "<br />");
+}
+
+
 </script>
-<div id="calendarTitle"></div>
-<div id="events"></div>
-<img src="./images/calendar.jpg">
+</head>
+<body>
+<img src="images/next.gif" />
+</body>
+</html>
