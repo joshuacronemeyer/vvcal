@@ -7,13 +7,20 @@
     <title>JsUnit Assertion Tests</title>
     <script language="JavaScript" type="text/javascript" src="jsunit/jsUnitCore.js"></script>
 
-    <script src="http://www.google.com/jsapi?key=ABQIAAAADRnyuq2mdBHBb4iDhmtuZBQM-KuWdanIH38iecu_8v3ev4H-ExS0xaUAQQ_5vEh_jAbxnNm5CqTd2Q" type="text/javascript"></script>
+    <script src="http://www.google.com/jsapi?key=ABQIAAAAKYmOqEXuSTJLmIQnR5PK0BT2yXp_ZAY8_ufC3CFXhHIE1NvwkxRY1xD4kh0qjbX_xcdZnGjjKoA4cA" type="text/javascript"></script>
     <script language="JavaScript" type="text/javascript">
 
     google.load("gdata", "1");
 
-	var feedUrl = "http://www.google.com/calendar/feeds/ctan@thoughtworks.com/public/full";
-	var feedTitle;
+    var feedUrl = "http://www.google.com/calendar/feeds/ctan@thoughtworks.com/public/full";
+    var feedTitle;
+	
+	
+	
+	
+	
+	
+	
 	
 	function getMyFeed() {
 	  myService = new google.gdata.calendar.CalendarService('Test Village Volunteers Calendar');
@@ -33,6 +40,52 @@
 	  //alert('This makes the test pass...');
 	  //assertEquals("Thoughtworks Beach", feedTitle);
 	}
+	
+	
+	
+	
+	
+	
+	
+	var myEntryRoot;
+	var results;
+	
+	function requestMySpecificEntry(entryURI) {
+	  myService = new google.gdata.calendar.CalendarService('Test Village Volunteers Calendar');
+	  myService.getEventsEntry(entryURI, handleMyEntry, handleError);
+	}
+		
+	function handleMyEntry(retrievedEntryRoot) {
+	  myEntryRoot = retrievedEntryRoot;
+	  searchMyFeed();	  
+	}
+	
+	function searchMyFeed() {
+	  var myQuery = new google.gdata.calendar.CalendarEventQuery(feedUrl);
+	  myQuery.setFullTextQuery("Home");
+	  myQuery.setMaxResults(10);
+	  myService.getEventsFeed(myQuery, handleMyQueryResults, handleError);
+	}
+	
+	function handleMyQueryResults(myResultsFeedRoot) {
+	  if (myResultsFeedRoot.feed.getEntries()[0]) {
+	    results = myResultsFeedRoot.feed.getEntries()[0].getTitle().getText();
+	  }
+	  else {
+	    results = "There are no entries that match the search query.";
+	  }
+	}
+	
+	function testShouldListTitlesOfAllEventsInPrimaryCalendar() {
+	  //requestMySpecificEntry("http://www.google.com/calendar/feeds/default/allcalendars/full");
+	  requestMySpecificEntry(feedUrl);
+	  //alert('This makes the test pass...');
+	  //assertNotUndefined(results);
+	  //assertNotEquals(results, "There are no entries that match the search query.");
+	}
+	
+	
+	
 
     </script>
   </head>
