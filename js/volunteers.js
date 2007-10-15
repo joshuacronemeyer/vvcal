@@ -76,3 +76,28 @@ function getListOfVolunteers() {
 
   myService.getAllCalendarsFeed(FEED, handleAllCalendarsForVillages, handleError);
 };
+
+function volunteer(firstName, lastName, email, phone) {
+	this.firstName 	= firstName;
+	this.lastName = lastName;
+	this.email = email;
+	this.phone = phone;
+}
+	var SelectOne = new volunteer("Select", "One", "Volunteer not selected", "Volunteer not selected");
+	var Jimmy = new volunteer("Jimmy", "Staggs", "jimmy@tw.com", "555-555-5555");
+	var Jeremy = new volunteer("Jeremy", "Stitz", "jeremy@tw.com", "555-555-2222");
+	var Holly = new volunteer("Holly", "Bowen", "holly@tw.com", "555-555-1111");
+	var volunteer_list = new Array();
+	volunteer_list[0] = SelectOne;
+	volunteer_list[1] = Jimmy;
+	volunteer_list[2] = Jeremy;
+	volunteer_list[3] = Holly;
+
+function displayInfo(objval)
+{
+	var contactInfo;
+	contactInfo = "<u><strong>Contact Information</strong></u><br>";
+	contactInfo += "Email: " + volunteer_list[objval].email + "<br>";
+	contactInfo += "Phone: " + volunteer_list[objval].phone + "<br>";
+	document.getElementById("info").innerHTML=contactInfo;
+}
