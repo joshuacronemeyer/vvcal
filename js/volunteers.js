@@ -23,6 +23,7 @@ function login()
 function logout()
 {
 	google.accounts.user.logout();
+	
 	init();
 };
 
@@ -42,6 +43,7 @@ function handleCalendarFeed(feedRoot)
   	}
 };
 
+/*
 function handleEventFeed(feedRoot) 
 {
 	entries = feedRoot.feed.getEntries();
@@ -51,6 +53,7 @@ function handleEventFeed(feedRoot)
 		document.getElementById('divEvents').firstChild.nodeValue += (entries[i].getTitle().getText() + " ");
 	}
 };
+*/
 
 function handleError(e) 
 {
