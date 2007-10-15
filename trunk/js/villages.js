@@ -1,55 +1,99 @@
-
-//<![CDATA[
-
 google.load("gdata", "1");
-google.setOnLoadCallback(dummyGetMyFeed);
+google.setOnLoadCallback(init);
+
+var SCOPE = 'http://www.google.com/calendar/feeds/';
+var FEED = 'http://www.google.com/calendar/feeds/default/owncalendars/full';
 
 var myService;
-var feedUrl = "http://www.google.com/calendar/feeds/ctan@thoughtworks.com/public/full";
-var eventDiv;
-var singleVillageItineraryString = "";
+
+/* Variables for the Villages tab. */
+var villageInfoString = "";
 var msgNoVolunteers = "No volunteers scheduled for this village.";
 var beginSelectedDate;
 var endSelectedDate;
 
-function logMeIn() {
-  scope = "http://www.google.com/calendar/feeds";
-  var token = google.accounts.user.login(scope);
-}
+function init() 
+{
+	google.gdata.client.init(handleError);
+	var token = google.accounts.user.checkLogin(SCOPE);
+	myService = new google.gdata.calendar.CalendarService("Village Volunteer Calendar");
+	
+	if (token) { refreshVillageItinerary(Today); }
+};
 
-function getMyFeed() {
-  myService = new google.gdata.calendar.CalendarService('vvcal');
-  logMeIn();
-  myService.getEventsFeed(feedUrl, handleMyFeed, handleError);
-}
+function login() 
+{
+	var token = google.accounts.user.login(SCOPE);
+};
 
-function handleMyFeed() {
-}
+function logout()
+{
+	google.accounts.user.logout();
+	init();
+};
 
-function dummyGetMyFeed() {
-}
+function getEvents() 
+{
+	myService.getCalendarsFeed(FEED, handleCalendarFeed, handleError);
+};
 
-function handleError(e) {
-	alert(e.cause ? e.cause.statusText : e.message);
-}
+function handleCalendarFeed(feedRoot)
+{
+  	calendars = feedRoot.feed.getEntries();
 
-function logMeOut() {
-  google.accounts.user.logout();
-}
+  	for(i = 0; i < calendars.length; i++)
+  	{
+	  	entryUrl = calendars[i].getLink().getHref();
+		myService.getEventsFeed(entryUrl, handleEventFeed, handleError);
+  	}
+};
 
+function handleEventFeed(feedRoot) 
+{
+	entries = feedRoot.feed.getEntries();
+	
+	for (i = 0; i < entries.length; i++) 
+	{
+		document.getElementById('divEvents').firstChild.nodeValue += (entries[i].getTitle().getText() + " ");
+	}
+};
+
+function handleError(e) 
+{
+	if (e instanceof Error) 
+	{
+		alert('Error at line ' + e.lineNumber + ' in ' + e.fileName + '\n' + 'Message: ' + e.message);
+		if (e.cause) 
+		{
+	  		var errorStatus = e.cause.status;
+	  		var statusText = e.cause.statusText;
+	  		alert('Root cause: HTTP error ' + errorStatus + ' with status text of: ' + statusText);
+		}
+	} 
+	else 
+	{
+		alert(e.toString());
+	}
+};
 
 function handleAllCalendarsForVillages(feedRoot) {
+  /* reset village itinerary info on page */
   var calendars = feedRoot.feed.getEntries();
 
   /* loop through each calendar in the feed */
   for (var i = 0; i < calendars.length; i++) {
     var calendar = calendars[i];
-    eventDiv.innerHTML += "<u>" + calendar.getTitle().getText() + "</u><br>";
-    singleVillageItineraryString = "";
+    
+    var villageElement = document.createElement('p');
+    villageElement.setAttribute('id', calendar.getTitle().getText());
+    document.getElementById('villageItinerary').appendChild(villageElement);
+    var villageTitle = document.createElement('u');
+    villageTitle.appendChild(document.createTextNode(calendar.getTitle().getText()));
+    villageItinerary.appendChild(villageTitle);
     myService.getEventsFeed(calendar.getLink().getHref(), handleVillageItinerary, handleError);
-    eventDiv.innerHTML += "<br>";
   }
-}
+  
+};
 
 function handleVillageItinerary(feedRoot) {
   var entries = feedRoot.feed.getEntries();
@@ -62,30 +106,20 @@ function handleVillageItinerary(feedRoot) {
       var entryEndDate = times[0].getEndTime().getDate();
       if (entryStartDate < endSelectedDate && entryEndDate > beginSelectedDate) {
         foundMatchingEntries = true;
-        eventDiv.innerHTML += entry.getTitle().getText() + "<br>";
+        document.getElementById('villageItinerary').firstChild.appendChild(document.createTextNode(entry.getTitle().getText() + " "));
       }
     }
   }
   if (foundMatchingEntries == false) {
-    eventDiv.innerHTML += "<i>" + msgNoVolunteers + "</i><br>";
+    //document.getElementById('villageItinerary').firstChild.nodeValue += "<i>" + msgNoVolunteers + "</i><br>";
   }
-}
+};
 
-function refreshVillageItinerary(pickedDate) {
+function refreshVillageItinerary(selectedDate) {
   /* set global variables beginSelectedDate and endSelectedDate - need them when examining the feed */
-  beginSelectedDate = new Date(pickedDate.date);
-  endSelectedDate = new Date(pickedDate.date);
+  beginSelectedDate = new Date(selectedDate);
+  endSelectedDate = new Date(selectedDate);
   endSelectedDate.setDate(endSelectedDate.getDate() + 1);
   
-  /* reset village itinerary info on page */
-  eventDiv = document.getElementById("villageItinerary");
-  eventDiv.innerHTML = "";
-
-  /* FIXME: when we can retrieve all calendars, uncomment the following line and comment out the portion below it */
-  /* myService.getAllCalendarsFeed(calendarsUrl, handleAllCalendarsForVillages, handleError); */
-  
-  var tempService = new google.gdata.calendar.CalendarService('vvcal');
-  tempService.getEventsFeed(feedUrl, handleVillageItinerary, handleError);
-}
-
-//]]>
+  myService.getAllCalendarsFeed(FEED, handleAllCalendarsForVillages, handleError);
+};
