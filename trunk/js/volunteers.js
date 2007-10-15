@@ -1,5 +1,6 @@
 var SCOPE = 'http://www.google.com/calendar/feeds/';
 var FEED = 'http://www.google.com/calendar/feeds/default/owncalendars/full';
+var volunteer_list = new Array();
 
 var myService;
 
@@ -21,6 +22,7 @@ function handleError(e)
 	}
 };
 
+/*
 function handleAllCalendarsForVillages(feedRoot) {
   removeAllChildNodesFrom(document.getElementById('villageItinerary'));
 
@@ -40,8 +42,8 @@ function handleAllCalendarsForVillages(feedRoot) {
   
 };
 
+
 function getVolunteerNames(feedRoot) {
-  var volunteer_list = new Array();
   var volunteer_id = 0;
 
   var calendarId = feedRoot.feed.getTitle().getText();
@@ -67,28 +69,10 @@ function getVolunteerNames(feedRoot) {
   }
 
 };
+*/
 
 function getListOfVolunteers() {
 	alert("Getting List of Volunteers");
 
   myService.getAllCalendarsFeed(FEED, handleAllCalendarsForVillages, handleError);
 };
-
-
-
-function volunteer(firstName, lastName, email, phone) {
-	this.firstName 	= firstName;
-	this.lastName = lastName;
-	this.email = email;
-	this.phone = phone;
-}
-
-function displayInfo(objval)
-{
-	var contactInfo;
-	contactInfo = "<u><strong>Contact Information</strong></u><br>";
-	contactInfo += "Email: " + volunteer_list[objval].email + "<br>";
-	contactInfo += "Phone: " + volunteer_list[objval].phone + "<br>";
-	document.getElementById("info").innerHTML=contactInfo;
-}	
-
