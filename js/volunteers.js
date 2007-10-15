@@ -68,7 +68,9 @@ function getVolunteerNames(feedRoot) {
 
 };
 
-function getListofVolunteers() { 
+function getListOfVolunteers() {
+	alert("Getting List of Volunteers");
+
   myService.getAllCalendarsFeed(FEED, handleAllCalendarsForVillages, handleError);
 };
 
@@ -88,11 +90,5 @@ function displayInfo(objval)
 	contactInfo += "Email: " + volunteer_list[objval].email + "<br>";
 	contactInfo += "Phone: " + volunteer_list[objval].phone + "<br>";
 	document.getElementById("info").innerHTML=contactInfo;
-}
-
-function isUserLoggedInt()
-{
-	return(google.accounts.user.checkLogin(SCOPE));
-}
-		
+}	
 
