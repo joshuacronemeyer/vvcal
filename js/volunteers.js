@@ -88,6 +88,11 @@ function displayInfo(objval)
 	contactInfo += "Phone: " + volunteer_list[objval].phone + "<br>";
 	document.getElementById("info").innerHTML=contactInfo;
 }
+
+function isUserLoggedInt()
+{
+	return(google.accounts.user.checkLogin(SCOPE));
+}
 		
 var SelectOne = new volunteer("Select", "One", "Volunteer not selected", "Volunteer not selected");
 var Jimmy = new volunteer("Jimmy", "Staggs", "jimmy@tw.com", "555-555-5555");

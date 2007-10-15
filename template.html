@@ -1,11 +1,16 @@
 <html>
 <head>
 	<title>Village Volunteers Calendar</title>
-
+	<script src="http://www.google.com/jsapi?key=ABQIAAAADRnyuq2mdBHBb4iDhmtuZBQM-KuWdanIH38iecu_8v3ev4H-ExS0xaUAQQ_5vEh_jAbxnNm5CqTd2Q" type="text/javascript"></script>
 	<script type="text/javascript" src="js/toggle.js"></script>
+	<script type="text/javascript" src="js/template.js"></script>
 </head>
-<body>
-		<iframe name="header" id="header" scrolling="no" frameborder="0" width="99%" height="10%" src="./header.html"></iframe>
-		<iframe name="thoughtworks" id="thoughtworks" onmouseover="showFrame()" width="25%" height="89%" src="./thoughtworks.html"></iframe>
-		<iframe name="calendar" id="calendar" width="74%" height="89%" src="http://www.google.com/calendar/render"></iframe>
+<body onload="checkUserStatus()">
+	<div>
+		<center><font size="24"><b>Village Volunteers Calendar</b></font><center>
+		<input type="button" name="inout"id="inout" value="Click Here To Login" onclick="inout()">
+		<br><br>
+	</div>
+	<iframe name="thoughtworks" id="thoughtworks" onmouseover="showFrame()" width="25%" height="87%" src="./thoughtworks.html" style="visibility:hidden"></iframe>
+	<iframe name="calendar" id="calendar" width="74%" height="87%" src="http://www.google.com/calendar/render" style="visibility:hidden"></iframe>
 </body>
