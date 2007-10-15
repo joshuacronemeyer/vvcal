@@ -76,51 +76,56 @@ function handleError(e)
 	}
 };
 
-function handleAllCalendarsForVillages(feedRoot) {
-  /* reset village itinerary info on page */
-  removeAllChildNodesFrom(document.getElementById('villageItinerary'));
+function handleAllCalendarsForVillages(feedRoot)
+{
+	/* reset village itinerary info on page */
+	removeAllChildNodesFrom(document.getElementById('villageItinerary'));
+	
+	/* loop through each calendar in the feed */
+	var calendars = feedRoot.feed.getEntries();
+	for (var i = 0; i < calendars.length; i++) {
+		var calendar = calendars[i];
+		var calendarTitle = calendar.getTitle().getText();
+		
+		/* write calendar title to screen */
+		var villageElement = document.createElement('p');
+		villageElement.setAttribute('id', calendarTitle);
+		villageElement.appendChild(createElementWithText('u', calendarTitle));
+		villageElement.appendChild(document.createElement('br'));
+		document.getElementById('villageItinerary').appendChild(villageElement);
 
-
-  /* loop through each calendar in the feed */
-  var calendars = feedRoot.feed.getEntries();
-  for (var i = 0; i < calendars.length; i++) {
-    var calendar = calendars[i];
-    
-    var villageElement = document.createElement('p');
-    villageElement.setAttribute('id', calendar.getTitle().getText());
-    document.getElementById('villageItinerary').appendChild(villageElement);
-    var villageTitle = document.createElement('u');
-    villageTitle.appendChild(document.createTextNode(calendar.getTitle().getText()));
-    villageElement.appendChild(villageTitle);
-    myService.getEventsFeed(calendar.getLink().getHref(), handleVillageItinerary, handleError);
-  }
-  
+		myService.getEventsFeed(calendar.getLink().getHref(), handleVillageItinerary, handleError);
+	}
 };
 
-function handleVillageItinerary(feedRoot) {
-  var calendarId = feedRoot.feed.getTitle().getText();
-  var entries = feedRoot.feed.getEntries();
-  var foundMatchingEntries = false;
-  
-  var entryListElement = document.createElement('ul');
-  document.getElementById(calendarId).appendChild(entryListElement);
-  for (var i = 0; i < entries.length; i++) {
-    var entry = entries[i];
-    var times = entry.getTimes();
-    if (times.length > 0) {
-      var entryStartDate = times[0].getStartTime().getDate();
-      var entryEndDate = times[0].getEndTime().getDate();
-      if (entryStartDate < endSelectedDate && entryEndDate > beginSelectedDate) {
-        foundMatchingEntries = true;
-        entryListElement.appendChild(createListElementWithText(entry.getTitle().getText()));
-      }
-    }
-  }
-  if (foundMatchingEntries == false) {
-        var entryElement = document.createElement('i');
-        entryElement.innerHTML = msgNoVolunteers;
-        document.getElementById(calendarId).appendChild(entryElement);
-  }
+function dummyFunction(feedRoot) {};
+
+function handleVillageItinerary(feedRoot)
+{
+	var calendarId = feedRoot.feed.getTitle().getText();
+	var entries = feedRoot.feed.getEntries();
+	var foundMatchingEntries = false;
+	
+	var entryListElement = document.createElement('ul');
+	entryListElement.setAttribute('class', 'volunteerList');
+	for (var i = 0; i < entries.length; i++) {
+		var entry = entries[i];
+		var times = entry.getTimes();
+		if (times.length > 0) {
+			var entryStartDate = times[0].getStartTime().getDate();
+			var entryEndDate = times[0].getEndTime().getDate();
+			if (entryStartDate < endSelectedDate && entryEndDate > beginSelectedDate) {
+				foundMatchingEntries = true;
+				entryListElement.appendChild(createElementWithText('li', entry.getTitle().getText()));
+			}
+		}
+	}
+	
+	if (entryListElement.hasChildNodes() == false) {
+		entryListElement = createElementWithText('i', msgNoVolunteers);
+	}
+	
+	document.getElementById(calendarId).appendChild(entryListElement);
 };
 
 function refreshVillageItinerary(selectedDate) {
@@ -132,9 +137,17 @@ function refreshVillageItinerary(selectedDate) {
   myService.getAllCalendarsFeed(FEED, handleAllCalendarsForVillages, handleError);
 };
 
-function createListElementWithText(input)
+function createElementWithText(elementType, input)
 {
-	var result = document.createElement('li');
+	var result = document.createElement(elementType);
+	result.innerHTML = input;
+	return result;
+};
+
+function createDivWithClassAndText(divClass, input)
+{
+	var result = document.createElement('div');
+	result.setAttribute('class', divClass);
 	result.innerHTML = input;
 	return result;
 };
