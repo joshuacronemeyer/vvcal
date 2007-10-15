@@ -1,6 +1,3 @@
-google.load("gdata", "1");
-google.setOnLoadCallback(init);
-
 var SCOPE = 'http://www.google.com/calendar/feeds/';
 var FEED = 'http://www.google.com/calendar/feeds/default/owncalendars/full';
 
