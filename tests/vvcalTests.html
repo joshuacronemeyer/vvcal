@@ -5,14 +5,15 @@
   <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>JsUnit Assertion Tests</title>
-    <script language="JavaScript" type="text/javascript" src="jsunit/jsUnitCore.js"></script>
+    <script language="JavaScript" type="text/javascript" src="../jsunit/jsUnitCore.js"></script>
 
     <script src="http://www.google.com/jsapi?key=ABQIAAAAKYmOqEXuSTJLmIQnR5PK0BT2yXp_ZAY8_ufC3CFXhHIE1NvwkxRY1xD4kh0qjbX_xcdZnGjjKoA4cA" type="text/javascript"></script>
     <script language="JavaScript" type="text/javascript">
 
     google.load("gdata", "1");
 
-    var feedUrl = "http://www.google.com/calendar/feeds/ctan@thoughtworks.com/public/full";
+    //var feedUrl = "http://www.google.com/calendar/feeds/ctan@thoughtworks.com/public/full";
+    var feedUrl = "http://www.google.com/calendar/feeds/";
     var feedTitle;
 	
 	
@@ -24,7 +25,8 @@
 	
 	function getMyFeed() {
 	  myService = new google.gdata.calendar.CalendarService('Test Village Volunteers Calendar');
-	  myService.getEventsFeed(feedUrl, handleMyFeed, handleError);
+	  var token = google.accounts.user.checkLogin(feedUrl);
+	  if (token) { myService.getEventsFeed(feedUrl, handleMyFeed, handleError); }
 	}	
 		
 	function handleMyFeed(myResultsFeedRoot) {
