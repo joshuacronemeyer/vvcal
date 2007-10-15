@@ -18,6 +18,9 @@ function init()
 	var token = google.accounts.user.checkLogin(SCOPE);
 	myService = new google.gdata.calendar.CalendarService("Village Volunteer Calendar");
 	
+	// temp until we get a login button
+	//var token = google.accounts.user.login(SCOPE);
+	
 	if (token) { refreshVillageItinerary(Today); }
 };
 
@@ -105,6 +108,7 @@ function handleVillageItinerary(feedRoot)
 	var calendarId = feedRoot.feed.getTitle().getText();
 	var entries = feedRoot.feed.getEntries();
 	var foundMatchingEntries = false;
+	var countMatchingEntries = 0;
 	
 	var entryListElement = document.createElement('ul');
 	entryListElement.setAttribute('class', 'volunteerList');
@@ -117,6 +121,7 @@ function handleVillageItinerary(feedRoot)
 			if (entryStartDate < endSelectedDate && entryEndDate > beginSelectedDate) {
 				foundMatchingEntries = true;
 				entryListElement.appendChild(createElementWithText('li', entry.getTitle().getText()));
+				countMatchingEntries++;
 			}
 		}
 	}
@@ -124,7 +129,10 @@ function handleVillageItinerary(feedRoot)
 	if (entryListElement.hasChildNodes() == false) {
 		entryListElement = createElementWithText('i', msgNoVolunteers);
 	}
-	
+
+	availability = document.getElementById(calendarId).firstChild.innerHTML.replace(/(\d+)/, countMatchingEntries + " out of $1");
+	document.getElementById(calendarId).firstChild.innerHTML = availability;
+		
 	document.getElementById(calendarId).appendChild(entryListElement);
 };
 
