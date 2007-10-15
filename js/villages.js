@@ -110,16 +110,14 @@ function handleVillageItinerary(feedRoot) {
       var entryEndDate = times[0].getEndTime().getDate();
       if (entryStartDate < endSelectedDate && entryEndDate > beginSelectedDate) {
         foundMatchingEntries = true;
-        var entryElement = document.createElement('li');
-        entryListElement.appendChild(entryElement);
-        entryElement.appendChild(document.createTextNode(entry.getTitle().getText() + " "));
+        entryListElement.appendChild(createListElementWithText(entry.getTitle().getText()));
       }
     }
   }
   if (foundMatchingEntries == false) {
-        var entryElement = document.createElement('li');
-        entryListElement.appendChild(entryElement);
-        entryElement.appendChild(document.createTextNode(msgNoVolunteers));
+        var entryElement = document.createElement('i');
+        entryElement.innerHTML = msgNoVolunteers;
+        document.getElementById(calendarId).appendChild(entryElement);
   }
 };
 
@@ -130,4 +128,11 @@ function refreshVillageItinerary(selectedDate) {
   endSelectedDate.setDate(endSelectedDate.getDate() + 1);
   
   myService.getAllCalendarsFeed(FEED, handleAllCalendarsForVillages, handleError);
+};
+
+function createListElementWithText(input)
+{
+	var result = document.createElement('li');
+	result.innerHTML = input;
+	return result;
 };
