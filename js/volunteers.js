@@ -12,7 +12,7 @@ function init()
 	var token = google.accounts.user.checkLogin(SCOPE);
 	myService = new google.gdata.calendar.CalendarService("Village Volunteer Calendar");
 	
-	if (token) { getEvents(); }
+	if (token) { getListofVolunteers(); }
 };
 
 function login() 
@@ -27,33 +27,6 @@ function logout()
 	init();
 };
 
-function getEvents() 
-{
-	myService.getCalendarsFeed(FEED, handleCalendarFeed, handleError);
-};
-
-function handleCalendarFeed(feedRoot)
-{
-  	calendars = feedRoot.feed.getEntries();
-
-  	for(i = 0; i < calendars.length; i++)
-  	{
-	  	entryUrl = calendars[i].getLink().getHref();
-		myService.getEventsFeed(entryUrl, handleEventFeed, handleError);
-  	}
-};
-
-/*
-function handleEventFeed(feedRoot) 
-{
-	entries = feedRoot.feed.getEntries();
-	
-	for (i = 0; i < entries.length; i++) 
-	{
-		document.getElementById('divEvents').firstChild.nodeValue += " ";
-	}
-};
-*/
 
 function handleError(e) 
 {
@@ -72,6 +45,59 @@ function handleError(e)
 		alert(e.toString());
 	}
 };
+
+function handleAllCalendarsForVillages(feedRoot) {
+  removeAllChildNodesFrom(document.getElementById('villageItinerary'));
+
+
+  var calendars = feedRoot.feed.getEntries();
+  for (var i = 0; i < calendars.length; i++) {
+    var calendar = calendars[i];
+    
+    var villageElement = document.createElement('p');
+    villageElement.setAttribute('id', calendar.getTitle().getText());
+    document.getElementById('villageItinerary').appendChild(villageElement);
+    var villageTitle = document.createElement('u');
+    villageTitle.appendChild(document.createTextNode(calendar.getTitle().getText()));
+    villageElement.appendChild(villageTitle);
+    myService.getEventsFeed(calendar.getLink().getHref(), handleVillageItinerary, handleError);
+  }
+  
+};
+
+function getVolunteerNames(feedRoot) {
+  var volunteer_list = new Array();
+  var volunteer_id = 0;
+
+  var calendarId = feedRoot.feed.getTitle().getText();
+  var entries = feedRoot.feed.getEntries();
+  
+  for (var i = 0; i < entries.length; i++) {
+    var entry = entries[i];
+    var event = entry.getTitle().getText();
+    var indexOfHypen = event.indexOf("-");
+    
+    var fullName = event.substring(0, indexOfHypen);
+    
+    var indexOfSpace = fullName.indexOf(" ");
+    
+    var firstName = fullName.substring(0, indexOfSpace);
+    var lastName = fullName.substring(indexOfSpace);
+    
+    var email = firstName +"@thoughtworks.com";
+    var phone = "555-5555";
+    
+    volunteer_list[volunteer_id] = new volunteer(firstName, lastName, email, phone); 
+    volunteer_id ++;
+  }
+
+};
+
+function getListofVolunteers() { 
+  myService.getAllCalendarsFeed(FEED, handleAllCalendarsForVillages, handleError);
+};
+
+
 
 function volunteer(firstName, lastName, email, phone) {
 	this.firstName 	= firstName;
@@ -94,13 +120,4 @@ function isUserLoggedInt()
 	return(google.accounts.user.checkLogin(SCOPE));
 }
 		
-var SelectOne = new volunteer("Select", "One", "Volunteer not selected", "Volunteer not selected");
-var Jimmy = new volunteer("Jimmy", "Staggs", "jimmy@tw.com", "555-555-5555");
-var Jeremy = new volunteer("Jeremy", "Stitz", "jeremy@tw.com", "555-555-2222");
-var Holly = new volunteer("Holly", "Bowen", "holly@tw.com", "555-555-1111");
-var volunteer_list = new Array();
-volunteer_list[0] = SelectOne;
-volunteer_list[1] = Jimmy;
-volunteer_list[2] = Jeremy;
-volunteer_list[3] = Holly;
 
