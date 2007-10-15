@@ -12,21 +12,24 @@
 
     google.load("gdata", "1");
 
-    //var feedUrl = "http://www.google.com/calendar/feeds/ctan@thoughtworks.com/public/full";
-    var feedUrl = "http://www.google.com/calendar/feeds/";
+    var SCOPE = 'http://www.google.com/calendar/feeds/';
+	var FEED = 'http://www.google.com/calendar/feeds/default/owncalendars/full';
+  
+	
+	
+	
+	
+	
+	
+	  
     var feedTitle;
-	
-	
-	
-	
-	
-	
-	
 	
 	function getMyFeed() {
 	  myService = new google.gdata.calendar.CalendarService('Test Village Volunteers Calendar');
-	  var token = google.accounts.user.checkLogin(feedUrl);
-	  if (token) { myService.getEventsFeed(feedUrl, handleMyFeed, handleError); }
+	  token = google.accounts.user.checkLogin(SCOPE);
+	  if (token) { 
+		  myService.getEventsFeed(FEED, handleMyFeed, handleError); 
+	  }
 	}	
 		
 	function handleMyFeed(myResultsFeedRoot) {
@@ -38,9 +41,10 @@
 	}
 	
 	function testShouldGetAnUnauthenticatedCalendarFeed() {
-	  getMyFeed();
+	  var token = google.accounts.user.login(SCOPE);
+      getMyFeed();
 	  //alert('This makes the test pass...');
-	  //assertEquals("Thoughtworks Beach", feedTitle);
+	  //assertEquals("Thoughtworks Beach's Calendar List", feedTitle);
 	}
 	
 	
@@ -63,7 +67,7 @@
 	}
 	
 	function searchMyFeed() {
-	  var myQuery = new google.gdata.calendar.CalendarEventQuery(feedUrl);
+	  var myQuery = new google.gdata.calendar.CalendarEventQuery(FEED);
 	  myQuery.setFullTextQuery("Home");
 	  myQuery.setMaxResults(10);
 	  myService.getEventsFeed(myQuery, handleMyQueryResults, handleError);
@@ -80,7 +84,7 @@
 	
 	function testShouldListTitlesOfAllEventsInPrimaryCalendar() {
 	  //requestMySpecificEntry("http://www.google.com/calendar/feeds/default/allcalendars/full");
-	  requestMySpecificEntry(feedUrl);
+	  requestMySpecificEntry(FEED);
 	  //alert('This makes the test pass...');
 	  //assertNotUndefined(results);
 	  //assertNotEquals(results, "There are no entries that match the search query.");
@@ -97,6 +101,8 @@
 
     <p>This page contains tests for the JsUnit Assertion
     functions. To see them, take a look at the source.</p>
+    
+    <img src="../images/pixel.gif" />
   </body>
 </html>
 
