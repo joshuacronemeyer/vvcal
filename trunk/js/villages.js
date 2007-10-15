@@ -130,7 +130,8 @@ function handleVillageItinerary(feedRoot)
 		entryListElement = createElementWithText('i', msgNoVolunteers);
 	}
 
-	availability = document.getElementById(calendarId).firstChild.innerHTML.replace(/(\d+)/, countMatchingEntries + " out of $1");
+	/* assumes village name is in <u> element that is first child of <p> with the calendarId id */
+	availability = document.getElementById(calendarId).firstChild.innerHTML.replace(/(\d+) Beds/i, countMatchingEntries + " out of $1 Beds");
 	document.getElementById(calendarId).firstChild.innerHTML = availability;
 		
 	document.getElementById(calendarId).appendChild(entryListElement);
