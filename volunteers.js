@@ -1,22 +1,23 @@
 google.load("gdata", "1");
 google.setOnLoadCallback(init);
 
-var FEED = 'http://www.google.com/calendar/feeds/';
+var SCOPE = 'http://www.google.com/calendar/feeds/';
+var FEED = 'http://www.google.com/calendar/feeds/default/owncalendars/full';
 
 var myService;
 
 function init() 
 {
 	google.gdata.client.init(handleError);
-	var token = google.accounts.user.checkLogin(FEED);
+	var token = google.accounts.user.checkLogin(SCOPE);
 	myService = new google.gdata.calendar.CalendarService("Village Volunteer Calendar");
 	
-	//if (token) { getEvents(); }
-}
+	if (token) { getEvents(); }
+};
 
 function login() 
 {
-	var token = google.accounts.user.login(FEED);
+	var token = google.accounts.user.login(SCOPE);
 };
 
 function logout()
@@ -27,27 +28,27 @@ function logout()
 
 function getEvents() 
 {
-	myService.getCalendarsFeed('http://www.google.com/calendar/feeds/default/owncalendars/full', handleCalendarFeed, handleError);
+	myService.getCalendarsFeed(FEED, handleCalendarFeed, handleError);
 };
 
 function handleCalendarFeed(feedRoot)
 {
   	calendars = feedRoot.feed.getEntries();
 
-    for(i = 0; i < calendars.length; i++)
+  	for(i = 0; i < calendars.length; i++)
   	{
-		document.write(calendars[i].getLink().getHref() + "<br />");
-  		myService.getEventsFeed(calendars[i].getLink().getHref(), handleEventFeed, handleError);
+	  	entryUrl = calendars[i].getLink().getHref();
+		myService.getEventsFeed(entryUrl, handleEventFeed, handleError);
   	}
 };
 
 function handleEventFeed(feedRoot) 
 {
-	var entries = feedRoot.feed.getEntries();
+	entries = feedRoot.feed.getEntries();
 	
 	for (i = 0; i < entries.length; i++) 
 	{
-		document.write(entries[i].getTitle().getText() + "<br />");
+		document.getElementById('divEvents').firstChild.nodeValue += (entries[i].getTitle().getText() + " ");
 	}
 };
 
