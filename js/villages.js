@@ -99,6 +99,9 @@ function handleVillageItinerary(feedRoot) {
   var calendarId = feedRoot.feed.getTitle().getText();
   var entries = feedRoot.feed.getEntries();
   var foundMatchingEntries = false;
+  
+  var entryListElement = document.createElement('ul');
+  document.getElementById(calendarId).appendChild(entryListElement);
   for (var i = 0; i < entries.length; i++) {
     var entry = entries[i];
     var times = entry.getTimes();
@@ -107,12 +110,16 @@ function handleVillageItinerary(feedRoot) {
       var entryEndDate = times[0].getEndTime().getDate();
       if (entryStartDate < endSelectedDate && entryEndDate > beginSelectedDate) {
         foundMatchingEntries = true;
-        document.getElementById(calendarId).appendChild(document.createTextNode(entry.getTitle().getText() + " "));
+        var entryElement = document.createElement('li');
+        entryListElement.appendChild(entryElement);
+        entryElement.appendChild(document.createTextNode(entry.getTitle().getText() + " "));
       }
     }
   }
   if (foundMatchingEntries == false) {
-    //document.getElementById(calendarId).appendChild(document.createTextNode("<i>" + msgNoVolunteers + "</i>"));
+        var entryElement = document.createElement('li');
+        entryListElement.appendChild(entryElement);
+        entryElement.appendChild(document.createTextNode(msgNoVolunteers));
   }
 };
 
