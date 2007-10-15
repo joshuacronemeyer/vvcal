@@ -78,9 +78,11 @@ function handleError(e)
 
 function handleAllCalendarsForVillages(feedRoot) {
   /* reset village itinerary info on page */
-  var calendars = feedRoot.feed.getEntries();
+  removeAllChildNodesFrom(document.getElementById('villageItinerary'));
+
 
   /* loop through each calendar in the feed */
+  var calendars = feedRoot.feed.getEntries();
   for (var i = 0; i < calendars.length; i++) {
     var calendar = calendars[i];
     
@@ -135,4 +137,13 @@ function createListElementWithText(input)
 	var result = document.createElement('li');
 	result.innerHTML = input;
 	return result;
+};
+
+function removeAllChildNodesFrom(element)
+{
+	if (element.hasChildNodes()) {
+		while (element.childNodes.length > 0 ) {
+			element.removeChild(element.firstChild );
+		}
+	}
 };
