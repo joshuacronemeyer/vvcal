@@ -6,28 +6,6 @@ var FEED = 'http://www.google.com/calendar/feeds/default/owncalendars/full';
 
 var myService;
 
-function init() 
-{
-	google.gdata.client.init(handleError);
-	var token = google.accounts.user.checkLogin(SCOPE);
-	myService = new google.gdata.calendar.CalendarService("Village Volunteer Calendar");
-	
-	if (token) { getListofVolunteers(); }
-};
-
-function login() 
-{
-	var token = google.accounts.user.login(SCOPE);
-};
-
-function logout()
-{
-	google.accounts.user.logout();
-	
-	init();
-};
-
-
 function handleError(e) 
 {
 	if (e instanceof Error) 
