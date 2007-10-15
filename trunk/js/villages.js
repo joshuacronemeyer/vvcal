@@ -95,13 +95,27 @@ function handleAllCalendarsForVillages(feedRoot)
 		villageElement.setAttribute('id', calendarTitle);
 		villageElement.appendChild(createElementWithText('u', calendarTitle));
 		villageElement.appendChild(document.createElement('br'));
-		document.getElementById('villageItinerary').appendChild(villageElement);
+		addSortedNodeToElement(document.getElementById('villageItinerary'), villageElement);
 
 		myService.getEventsFeed(calendar.getLink().getHref(), handleVillageItinerary, handleError);
 	}
 };
 
 function dummyFunction(feedRoot) {};
+
+function addSortedNodeToElement(element, childNodeToInsert)
+{
+	if (element.hasChildNodes() == true) {
+		for (i = 0; i < element.childNodes.length; i++) {
+			var childNode = element.childNodes[i];
+			if (childNodeToInsert.getAttribute('id') < childNode.getAttribute('id')) {
+				element.insertBefore(childNodeToInsert, childNode);
+				return;
+			}
+		}
+	}
+	element.appendChild(childNodeToInsert);
+};
 
 function handleVillageItinerary(feedRoot)
 {
@@ -138,25 +152,17 @@ function handleVillageItinerary(feedRoot)
 };
 
 function refreshVillageItinerary(selectedDate) {
-  /* set global variables beginSelectedDate and endSelectedDate - need them when examining the feed */
-  beginSelectedDate = new Date(selectedDate);
-  endSelectedDate = new Date(selectedDate);
-  endSelectedDate.setDate(endSelectedDate.getDate() + 1);
-  
-  myService.getAllCalendarsFeed(FEED, handleAllCalendarsForVillages, handleError);
+	/* set global variables beginSelectedDate and endSelectedDate - need them when examining the feed */
+	beginSelectedDate = new Date(selectedDate);
+	endSelectedDate = new Date(selectedDate);
+	endSelectedDate.setDate(endSelectedDate.getDate() + 1);
+	
+	myService.getAllCalendarsFeed(FEED, handleAllCalendarsForVillages, handleError);
 };
 
 function createElementWithText(elementType, input)
 {
 	var result = document.createElement(elementType);
-	result.innerHTML = input;
-	return result;
-};
-
-function createDivWithClassAndText(divClass, input)
-{
-	var result = document.createElement('div');
-	result.setAttribute('class', divClass);
 	result.innerHTML = input;
 	return result;
 };

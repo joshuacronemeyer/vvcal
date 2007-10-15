@@ -137,6 +137,7 @@ function PickDisplayDay(ClickedDay) {
    // Change the year, if necessary
    YearField.value = this.picked.yearPad;
    YearField.defaultValue = YearField.value;
+   refreshVillageItinerary(this.picked.date);
 }
 
 // Builds the HTML for the calendar days
