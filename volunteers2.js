@@ -36,10 +36,8 @@ function handleCalendarsFeed(myCalendarsRoot) {
 
   calendars = myCalendarsFeed.getEntries();
   
-  for(var i = 0; i < calendars.length; i++) {
+  for(var i = 0; i < calendars.length; i++) {  
     feedUrl = calendars[i].getLink().getHref().replace(PRIVATE, PUBLIC);  
-    
-    //document.getElementById('divCalendars').firstChild.nodeValue += calendars[i].getTitle().getText() + " (" + feedUrl + ") ";
     
     myService.getEventsFeed(feedUrl, handleEventsFeed, handleError);
   }
