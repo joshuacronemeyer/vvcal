@@ -89,13 +89,14 @@ function handleAllCalendarsForVillages(feedRoot) {
     document.getElementById('villageItinerary').appendChild(villageElement);
     var villageTitle = document.createElement('u');
     villageTitle.appendChild(document.createTextNode(calendar.getTitle().getText()));
-    villageItinerary.appendChild(villageTitle);
+    villageElement.appendChild(villageTitle);
     myService.getEventsFeed(calendar.getLink().getHref(), handleVillageItinerary, handleError);
   }
   
 };
 
 function handleVillageItinerary(feedRoot) {
+  var calendarId = feedRoot.feed.getTitle().getText();
   var entries = feedRoot.feed.getEntries();
   var foundMatchingEntries = false;
   for (var i = 0; i < entries.length; i++) {
@@ -106,12 +107,12 @@ function handleVillageItinerary(feedRoot) {
       var entryEndDate = times[0].getEndTime().getDate();
       if (entryStartDate < endSelectedDate && entryEndDate > beginSelectedDate) {
         foundMatchingEntries = true;
-        document.getElementById('villageItinerary').firstChild.appendChild(document.createTextNode(entry.getTitle().getText() + " "));
+        document.getElementById(calendarId).appendChild(document.createTextNode(entry.getTitle().getText() + " "));
       }
     }
   }
   if (foundMatchingEntries == false) {
-    //document.getElementById('villageItinerary').firstChild.nodeValue += "<i>" + msgNoVolunteers + "</i><br>";
+    //document.getElementById(calendarId).appendChild(document.createTextNode("<i>" + msgNoVolunteers + "</i>"));
   }
 };
 
