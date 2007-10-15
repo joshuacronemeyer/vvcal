@@ -23,11 +23,19 @@ function logMeIn() {
   var token = google.accounts.user.login(scope);
 }
 
+
+function handleInfo(data) {
+  document.write(data.target + "<br />");
+  document.write(data.scope + "<br />");
+}
+
+
 function handleCalendarCallback(root) {
   	calendars = root.feed.getEntries();
 
-    if (google.accounts.user.checkLogin("http://www.google.com/calendar/feeds") != "") {
+    if (google.accounts.user.checkLogin(calendarsUrl) != "") {
       google.accounts.user.getInfo(handleInfo);
+      document.write("jimmy<br />");
     } else {
       document.write("token is broken<br />");
     }
@@ -35,7 +43,7 @@ function handleCalendarCallback(root) {
   	for(i = 0; i < calendars.length; i++)
   	{
 		document.write(calendars[i].getLink().getHref() + "<br />");
-  		myService.getEventsFeed(calendars[i].getLink().getHref(), handleEventCallback,handleError);
+  		myService.getEventsFeed(calendars[i].getLink().getHref(), handleEventCallback, handleError);
   	}
   	
   	google.accounts.user.logout();
@@ -47,15 +55,21 @@ function handleEventCallback(root) {
 
 
 function handleError(e) {
-	alert(e.cause ? e.cause.statusText : e.message);
+  if (e instanceof Error) {
+
+    alert('Error at line ' + e.lineNumber + ' in ' + e.fileName + '\n' + 'Message: ' + e.message);
+
+    if (e.cause) {
+      var errorStatus = e.cause.status;
+      var statusText = e.cause.statusText;
+
+      alert('Root cause: HTTP error ' + errorStatus + ' with status text of: ' + statusText);
+    }
+  } else {
+    alert(e.toString());
+  }
 }
 
-
-
-function handleInfo(info) {
-  document.write(info.target + "<br />");
-  document.write(info.scope + "<br />");
-}
 
 
 </script>
