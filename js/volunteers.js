@@ -66,3 +66,8 @@ function displayInfo(index)
 	
 	document.getElementById('info').innerHTML = contactInfo;
 }
+
+function displayItinerary()
+{
+	itineraryInfo = "<u><b>Itinerary Information</b></u><br>";
+}
