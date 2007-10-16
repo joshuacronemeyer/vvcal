@@ -4,20 +4,9 @@
     <script type="text/javascript" src="http://www.google.com/jsapi?key=ABQIAAAAKYmOqEXuSTJLmIQnR5PK0BT2yXp_ZAY8_ufC3CFXhHIE1NvwkxRY1xD4kh0qjbX_xcdZnGjjKoA4cA"></script>
     <script type="text/javascript" src="js/volunteers.js"></script>
   </head>
-  <body>
-    <div><b>Volunteer: </b>
-		<script>
-		document.write("<select name='volunteers' onChange='displayInfo(this.options[this.selectedIndex].value)'>");
-		for (i=0;i<volunteer_list.length;i++)
-			{
-				if (i==0)
-					document.write("<option value='" + i +"' selected='yes'>" + volunteer_list[i].firstName + " " + volunteer_list[i].lastName + "</option>");
-				else
-					document.write("<option value='" + i +"'>" + volunteer_list[i].firstName + " " + volunteer_list[i].lastName + "</option>");
-				}
-				document.write("</select>");
-		</script>
-	</div>
+  <body onload="displaydropdown()">
+    <div><b>Volunteers: </b>
+    <span id="combo"></span></div>
 	<span id="info"><br></span>
 	<br />
     <div id="divEvents" name="test">&nbsp;</div>
