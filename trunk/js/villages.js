@@ -1,3 +1,5 @@
+google.load("gdata", "1");
+
 var SCOPE = 'http://www.google.com/calendar/feeds/';
 var FEED = 'http://www.google.com/calendar/feeds/default/owncalendars/full';
 
@@ -9,30 +11,13 @@ var msgNoVolunteers = "No volunteers scheduled for this village.";
 var beginSelectedDate;
 var endSelectedDate;
 
-function getEvents() 
+function initVillages() 
 {
-	myService.getCalendarsFeed(FEED, handleCalendarFeed, handleError);
-};
-
-function handleCalendarFeed(feedRoot)
-{
-  	calendars = feedRoot.feed.getEntries();
-
-  	for(i = 0; i < calendars.length; i++)
-  	{
-	  	entryUrl = calendars[i].getLink().getHref();
-		myService.getEventsFeed(entryUrl, handleEventFeed, handleError);
-  	}
-};
-
-function handleEventFeed(feedRoot) 
-{
-	entries = feedRoot.feed.getEntries();
+	google.gdata.client.init(handleError);
+	var token = google.accounts.user.checkLogin(SCOPE);
+	myService = new google.gdata.calendar.CalendarService("Village Volunteer Calendar");
 	
-	for (i = 0; i < entries.length; i++) 
-	{
-		document.getElementById('divEvents').firstChild.nodeValue += (entries[i].getTitle().getText() + " ");
-	}
+	if (token) { refreshVillageItinerary(new Date()); }
 };
 
 function handleError(e) 
