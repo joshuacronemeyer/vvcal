@@ -58,7 +58,14 @@ function populateVolunteerList()
 	document.getElementById('combo').innerHTML = comboBox;
 }
 
+
 function displayInfo(index)
+{
+	displayContactInfo(index);
+	displayItinerary(index);
+}
+
+function displayContactInfo(index)
 {
 	contactInfo = "<u><b>Contact Information</b></u><br>";
 	contactInfo += "Email: " + volunteerList[index].email + "<br>";
@@ -70,4 +77,6 @@ function displayInfo(index)
 function displayItinerary()
 {
 	itineraryInfo = "<u><b>Itinerary Information</b></u><br>";
+		
+	document.getElementById('itinerary').innerHTML = itineraryInfo;
 }
