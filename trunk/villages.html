@@ -2,16 +2,23 @@
 <head>
 	<script src="http://www.google.com/jsapi?key=ABQIAAAAKYmOqEXuSTJLmIQnR5PK0BT2yXp_ZAY8_ufC3CFXhHIE1NvwkxRY1xD4kh0qjbX_xcdZnGjjKoA4cA" type="text/javascript"></script>
 	<script type="text/javascript" src="js/villages.js"></script>
+	<script type="text/javascript" src="js/calendarDateInput.js">
+		/***********************************************
+		* Jason's Date Input Calendar- By Jason Moon http://calendar.moonscript.com/dateinput.cfm
+		* Script featured on and available at http://www.dynamicdrive.com
+		* Keep this notice intact for use.
+		***********************************************/
+	</script>
 	<link rel="stylesheet" href="css/example.css" TYPE="text/css" MEDIA="screen">
 </head>
 <body>
 	<div align="center">
-		<b>Please Select A Date:</b>
+		<b>Please Select A Date: </b>
+		<script>DateInput('date', true, 'YYYY-MM-DD')</script>
 		<hr width="80%" align="center">
 	</div>
-		<tr>
-			<td><div id="villageItinerary"></div></td>
-		</tr>
-	</table>
+
+	<div id="villageItinerary"></div>
+
 </body>
 </html>
