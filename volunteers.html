@@ -1,14 +1,21 @@
 <html>
-  <head>
-    <title>Village Volunteers Calendar Mashup</title>
-    <script type="text/javascript" src="http://www.google.com/jsapi?key=ABQIAAAAKYmOqEXuSTJLmIQnR5PK0BT2yXp_ZAY8_ufC3CFXhHIE1NvwkxRY1xD4kh0qjbX_xcdZnGjjKoA4cA"></script>
-    <script type="text/javascript" src="js/volunteers.js"></script>
-  </head>
-  <body onload="displaydropdown()">
-    <div><b>Volunteers: </b>
-    <span id="combo"></span></div>
-	<span id="info"><br></span>
-	<br />
-    <div id="divEvents" name="test">&nbsp;</div>
-  </body>
+<head>
+	<script type="text/javascript" src="http://www.google.com/jsapi?key=ABQIAAAAKYmOqEXuSTJLmIQnR5PK0BT2yXp_ZAY8_ufC3CFXhHIE1NvwkxRY1xD4kh0qjbX_xcdZnGjjKoA4cA"></script>
+	<script type="text/javascript" src="js/volunteers.js"></script>
+</head>
+<body onload="populateVolunteerList()">
+	<img src="images/pixel.gif" style="position: absolute; top: -10; left: 0;"/>
+	<div align="center">
+		<b>Please Select A Volunteer:</b><br>
+		<table>
+			<tr>
+				<td><span id="combo" name="combo"/></td>
+				<td><input type="button" class="dateButton" value="Go" onclick="displayInfo();" /></td>
+			</tr>
+		</table>
+		<hr width="80%" align="center">
+	</div>
+	<span id="info" name="info" />
+	<span id="itinerary" name="info" />
+</body>
 </html>

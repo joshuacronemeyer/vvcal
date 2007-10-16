@@ -3,28 +3,26 @@
 	<script src="http://www.google.com/jsapi?key=ABQIAAAAKYmOqEXuSTJLmIQnR5PK0BT2yXp_ZAY8_ufC3CFXhHIE1NvwkxRY1xD4kh0qjbX_xcdZnGjjKoA4cA" type="text/javascript"></script>
 	<script type="text/javascript" src="js/villages.js"></script>
 	<script type="text/javascript" src="js/calendarDateInput.js">
-		/***********************************************
-		* Jason's Date Input Calendar- By Jason Moon http://calendar.moonscript.com/dateinput.cfm
-		* Script featured on and available at http://www.dynamicdrive.com
-		* Keep this notice intact for use.
-		***********************************************/
+	/***********************************************
+	 * Jason's Date Input Calendar- By Jason Moon http://calendar.moonscript.com/dateinput.cfm
+	 * Script featured on and available at http://www.dynamicdrive.com
+	 * Keep this notice intact for use.
+	 ***********************************************/
 	</script>
 	<link rel="stylesheet" href="css/example.css" TYPE="text/css" MEDIA="screen">
 </head>
 <body>
 	<img src="images/pixel.gif" style="position: absolute; top: -10; left: 0;"/>
-
 	<div align="center">
-		<b>Please Select A Date: </b>
-		<br>
-		<table><tr>
-			<td><script>DateInput('date', true, 'YYYY-MM-DD')</script></td>
-			<td><input type="button" class="dateButton" value="Go" onclick="initVillages();" /></td>
-		</tr></table>
+		<b>Please Select A Date:</b><br>
+		<table>
+			<tr>
+				<td><script>DateInput('date', true, 'YYYY-MM-DD')</script></td>
+				<td><input type="button" class="dateButton" value="Go" onclick="initVillages();" /></td>
+			</tr>
+		</table>
 		<hr width="80%" align="center">
 	</div>
-
 	<div id="villageItinerary"></div>
-
 </body>
 </html>

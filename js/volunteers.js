@@ -1,8 +1,8 @@
 var SCOPE = 'http://www.google.com/calendar/feeds/';
 var FEED = 'http://www.google.com/calendar/feeds/default/owncalendars/full';
-var volunteer_list = new Array();
 
 var myService;
+var volunteerList = new Array();
 
 function handleError(e) 
 {
@@ -23,44 +23,46 @@ function handleError(e)
 };
 
 
-function volunteer(firstName, lastName, email, phone) {
+function volunteer(firstName, lastName, email, phone) 
+{
 	this.firstName 	= firstName;
 	this.lastName = lastName;
 	this.email = email;
 	this.phone = phone;
 }
-	var SelectOne = new volunteer("Select", "One", "Volunteer not selected", "Volunteer not selected");
-	var Jimmy = new volunteer("Jimmy", "Staggs", "jimmy@tw.com", "555-555-5555");
-	var Jeremy = new volunteer("Jeremy", "Stitz", "jeremy@tw.com", "555-555-2222");
-	var Holly = new volunteer("Holly", "Bowen", "holly@tw.com", "555-555-1111");
-	var volunteer_list = new Array();
-	volunteer_list[0] = SelectOne;
-	volunteer_list[1] = Jimmy;
-	volunteer_list[2] = Jeremy;
-	volunteer_list[3] = Holly;
-	
-function displaydropdown()
-{
-	var comboBox;
-	comboBox = "<select name='volunteers' onChange='displayInfo(this.options[this.selectedIndex].value)'>";
-	for (i=0;i<volunteer_list.length;i++)
-	{
-	if (i==0)
-		comboBox += "<option value='" + i +"' selected='yes'>" + volunteer_list[i].firstName + " " + volunteer_list[i].lastName + "</option>";
-	else
-		comboBox +="<option value='" + i +"'>" + volunteer_list[i].firstName + " " + volunteer_list[i].lastName + "</option>";
-	}
-	comboBox += "</select>";
-	document.getElementById("combo").innerHTML = comboBox;
-	
 
+var SelectOne = new volunteer("Select", "One", "Volunteer not selected", "Volunteer not selected");
+var Jimmy = new volunteer("Jimmy", "Staggs", "jimmy@tw.com", "555-555-5555");
+var Jeremy = new volunteer("Jeremy", "Stitz", "jeremy@tw.com", "555-555-2222");
+var Holly = new volunteer("Holly", "Bowen", "holly@tw.com", "555-555-1111");
+	
+volunteerList[0] = SelectOne;
+volunteerList[1] = Jimmy;
+volunteerList[2] = Jeremy;
+volunteerList[3] = Holly;
+	
+function populateVolunteerList()
+{
+	comboBox = "<select name='volunteers' id='volunteers' onChange='displayInfo(this.options[this.selectedIndex].value)'>";
+	
+	for (i = 0 ;i<volunteerList.length; i++)
+	{
+		if (i==0)
+			comboBox += "<option value='" + i +"' selected='yes'>" + volunteerList[i].firstName + " " + volunteerList[i].lastName + "</option>";
+		else
+			comboBox += "<option value='" + i +"'>" + volunteerList[i].firstName + " " + volunteerList[i].lastName + "</option>";
+	}
+	
+	comboBox += "</select>";
+	
+	document.getElementById('combo').innerHTML = comboBox;
 }
 
-function displayInfo(objval)
+function displayInfo(index)
 {
-	var contactInfo;
-	contactInfo = "<u><strong>Contact Information</strong></u><br>";
-	contactInfo += "Email: " + volunteer_list[objval].email + "<br>";
-	contactInfo += "Phone: " + volunteer_list[objval].phone + "<br>";
-	document.getElementById("info").innerHTML=contactInfo;
+	contactInfo = "<u><b>Contact Information</b></u><br>";
+	contactInfo += "Email: " + volunteerList[index].email + "<br>";
+	contactInfo += "Phone: " + volunteerList[index].phone + "<br>";
+	
+	document.getElementById('info').innerHTML = contactInfo;
 }
