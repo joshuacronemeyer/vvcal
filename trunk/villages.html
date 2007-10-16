@@ -12,15 +12,19 @@
 	<link rel="stylesheet" href="css/example.css" TYPE="text/css" MEDIA="screen">
 </head>
 <body>
+	<img src="images/pixel.gif" style="position: absolute; top: -10; left: 0;"/>
+
 	<div align="center">
 		<b>Please Select A Date: </b>
-		<script>DateInput('date', true, 'YYYY-MM-DD')</script>
+		<br>
+		<table><tr>
+			<td><script>DateInput('date', true, 'YYYY-MM-DD')</script></td>
+			<td><input type="button" class="dateButton" value="Go" onclick="initVillages();" /></td>
+		</tr></table>
 		<hr width="80%" align="center">
 	</div>
-	
+
 	<div id="villageItinerary"></div>
 
-	<img src="images/pixel.gif" />
-	<input type="button" value="Get Listing" onclick="initVillages();" />
 </body>
 </html>

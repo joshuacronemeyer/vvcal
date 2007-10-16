@@ -17,7 +17,7 @@ function initVillages()
 	var token = google.accounts.user.checkLogin(SCOPE);
 	myService = new google.gdata.calendar.CalendarService("Village Volunteer Calendar");
 	
-	if (token) { refreshVillageItinerary(new Date()); }
+	if (token) { refreshVillageItinerary(date_Object.picked.date); }
 };
 
 function handleError(e) 

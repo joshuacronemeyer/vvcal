@@ -118,3 +118,10 @@ ul.volunteerList {
 	margin: 0;
 	padding: 0;
 }
+
+.dateButton {
+	margin-top: -2;
+	height: 18;
+	font-family: Tahoma, Arial;
+	font-size: 11;
+}
