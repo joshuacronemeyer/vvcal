@@ -57,6 +57,8 @@ function handleAllCalendarsForVillages(feedRoot)
 	for (var i = 0; i < calendars.length; i++) {
 		var calendar = calendars[i];
 		var calendarTitle = calendar.getTitle().getText();
+
+		if (!calendar.getSelected().getValue()) { continue; }
 		
 		/* write calendar title to screen */
 		var villageElement = document.createElement('p');
