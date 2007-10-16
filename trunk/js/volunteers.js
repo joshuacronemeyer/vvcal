@@ -20,7 +20,7 @@ function handleError(e)
 	{
 		alert(e.toString());
 	}
-};
+}
 
 
 function volunteer(firstName, lastName, email, phone) 
