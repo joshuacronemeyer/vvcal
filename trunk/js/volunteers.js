@@ -133,4 +133,4 @@ function displayItinerary()
 	itineraryInfo = "<u><b>Itinerary Information</b></u><br>";
 		
 	document.getElementById('itinerary').innerHTML = itineraryInfo;
-}
+}s
