@@ -7,8 +7,8 @@ function showFrame()
 
 	divTabber.style.display = 'block';
 	divToggle.style.display = 'block';
-	frameThoughtWorks.width = '25%';
-	frameCalendar.width= '74%';
+	frameThoughtWorks.style.width = '25%';
+	frameCalendar.style.width= '74%';
 }
 
 function hideFrame()
@@ -20,6 +20,6 @@ function hideFrame()
 
 	divTabber.style.display = 'none';
 	divToggle.style.display = 'none';
-	frameThoughtWorks.width = '1%';
-	frameCalendar.width = '98%';
+	frameThoughtWorks.style.width = '1%';
+	frameCalendar.style.width = '98%';
 }
