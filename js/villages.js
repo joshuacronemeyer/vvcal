@@ -103,7 +103,7 @@ function handleVillageItinerary(feedRoot)
 {
 	var calendarId = feedRoot.feed.getTitle().getText();
 	var entries = feedRoot.feed.getEntries();
-	var countMatchingEntries = 0;
+	var entryCountPerDay = initializeEntryCountArray();
 	
 	var entryListElement = document.createElement('ul');
 	entryListElement.setAttribute('class', 'volunteerList');
@@ -115,7 +115,7 @@ function handleVillageItinerary(feedRoot)
 			var entryEndDate = times[0].getEndTime().getDate();
 			if (entryStartDate < endSelectedDate && entryEndDate > beginSelectedDate) {
 				addSortedNodeToElement(entryListElement, createElementWithText('li', entry.getTitle().getText()), false);
-				countMatchingEntries++;
+				updateEntryCountPerDay(entryCountPerDay, entryStartDate, entryEndDate);
 			}
 		}
 	}
@@ -125,7 +125,8 @@ function handleVillageItinerary(feedRoot)
 	}
 
 	/* assumes village name is in <u> element that is first child of <p> with the calendarId id */
-	availability = document.getElementById(calendarId).firstChild.innerHTML.replace(/(\d+) Beds/i, countMatchingEntries + " out of $1 Beds");
+	
+	availability = document.getElementById(calendarId).firstChild.innerHTML.replace(/(\d+) Beds/i, "maximum: " + getMaxOccupancy(entryCountPerDay) + " out of $1 Beds");
 	document.getElementById(calendarId).firstChild.innerHTML = availability;
 		
 	document.getElementById(calendarId).appendChild(entryListElement);
@@ -135,6 +136,39 @@ function handleVillageItinerary(feedRoot)
 /**********************************************************/
 /* Utility functions                                      */
 /**********************************************************/
+
+function initializeEntryCountArray()
+{
+	var msPerDay = 24*60*60*1000;
+	var numberOfDays = (endSelectedDate.getTime() - beginSelectedDate.getTime()) / msPerDay;
+
+	var result = new Array();
+	for (var i = 0; i < numberOfDays; i++) { 
+		result.push(0);
+	}
+	return result;
+};
+
+function updateEntryCountPerDay(entryArray, entryStartDate, entryEndDate)
+{
+	var msPerDay = 24*60*60*1000;
+	var dayStartTime = beginSelectedDate.getTime();
+	for (var i = 0; i < entryArray.length; i++) {
+		if (entryStartDate.getTime() < (dayStartTime + msPerDay) && entryEndDate.getTime() > dayStartTime) {
+			entryArray[i] ++;
+		}
+		dayStartTime += msPerDay;
+	}
+};
+
+function getMaxOccupancy(entryArray)
+{
+	var result = 0;
+	for (var i = 0; i < entryArray.length; i++) {
+		result = Math.max(result, entryArray[i]);
+	}
+	return result;
+};
 
 function addSortedNodeToElement(element, childNodeToInsert, doSortById)
 {
