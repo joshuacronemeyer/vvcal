@@ -79,17 +79,22 @@ function getVolunteerList(feedRoot)
 	for (var i = 0; i < entries.length; i++) {
 		var entry = entries[i];
 		var fullName = entry.getTitle().getText();
-		option = document.createElement('option');
-		option.setAttribute('value', fullName);
-		option.innerHTML = fullName;
-		volunteerBox.appendChild(option);
+		if (!isDuplicated(fullName)){
+			option = document.createElement('option');
+			option.setAttribute('value', fullName);
+			option.innerHTML = fullName;
+			volunteerBox.appendChild(option);		
+		}
 	}
 };
 
-function checkForDuplicates(firstName, lastName){
-	for (var j = 0; j < volunteerList.length; j++){
-		if (volunteerList[j].firstName = firstName)
-			return true;		
+function isDuplicated(fullName){
+	currentList = document.getElementsByTagName("option")
+
+	for (var j = 0; j < currentList.length; j++){
+		currentName = currentList.item(j).getAttribute("value");
+		if (currentName == fullName)
+			return true;
 	}
 	return false;
 }
@@ -101,10 +106,11 @@ function displayInfo(index)
 }
 
 function displayContactInfo(index)
-{		
+{	
+	volunteerSelected = getVolunteerInfo(index);
 	contactInfo = "<u><b>Contact Information</b></u><br>";
-	contactInfo += "Email: " + volunteerList[index].email + "<br>";
-	contactInfo += "Phone: " + volunteerList[index].phone + "<br>";
+	contactInfo += "Email: " + volunteerSelected.email + "<br>";
+	contactInfo += "Phone: " + volunteerSelected.phone + "<br>";
 	
 	document.getElementById('info').innerHTML = contactInfo;
 }
@@ -115,6 +121,15 @@ function displayItinerary()
 		
 	document.getElementById('itinerary').innerHTML = itineraryInfo;
 }
+
+function getVolunteerInfo(fullName){
+	for (var i = 0; i < volunteerList.length; i++) {
+		if (fullName == volunteerList[i].firstName + " " + volunteerList[i].lastName)
+			return volunteerList[i];
+	}
+	return new volunteer("","","Not found", "Not found");
+}
+
 
 function removeAllChildNodesFrom(element)
 {
