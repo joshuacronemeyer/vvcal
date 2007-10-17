@@ -12,7 +12,7 @@ volunteerList[3] = new volunteer("Jimmy Staggs", "jstaggs@thoughtworks.com", "55
 volunteerList[4] = new volunteer("Holly Bowen", "hbowen@twu.com", "555-111-1111");
 
 
-volunteerCounter = 1;
+volunteerCounter = 0;
 
 function initVolunteers() 
 {
@@ -53,8 +53,8 @@ function volunteer(fullName, email, phone)
 
 function refreshVillageItinerary() {
 
-
 	myService.getAllCalendarsFeed(FEED, handleAllCalendarsForVillages, handleError);
+
 };
 
 function handleAllCalendarsForVillages(feedRoot)
@@ -69,6 +69,7 @@ function handleAllCalendarsForVillages(feedRoot)
 		
 		myService.getEventsFeed(calendar.getLink().getHref(), getVolunteerList, handleError);
 	}
+	
 };
 
 function getVolunteerList(feedRoot)
@@ -80,17 +81,21 @@ function getVolunteerList(feedRoot)
 		var entry = entries[i];
 		var fullName = entry.getTitle().getText();
 		if (!isDuplicated(fullName)){
+			if (volunteerCounter == 0)
+				fullName = " Select One";		
 			option = document.createElement('option');
 			option.setAttribute('value', fullName);
 			option.innerHTML = fullName;
 			volunteerBox.appendChild(option);
 			addSortedNodeToElement(volunteerBox, option, false);
+			volunteerCounter ++;
 		}
 	}
+
 };
 
 function isDuplicated(fullName){
-	currentList = document.getElementsByTagName("option")
+	currentList = document.getElementsByTagName("option");
 
 	for (var j = 0; j < currentList.length; j++){
 		currentName = currentList.item(j).getAttribute("value");
@@ -125,6 +130,7 @@ function displayItinerary()
 
 function getVolunteerInfo(fullName){
 	found = 0;
+	volunteerfound = new volunteer("", "Not found", "Not found");
 	for (var i = 0; i < volunteerList.length; i++) {
 		if (fullName == volunteerList[i].fullName)
 		{
@@ -133,9 +139,6 @@ function getVolunteerInfo(fullName){
 		}
 	}
 	
-	if (found == 0)
-		volunteerfound = new volunteer("", "Not found", "Not found");
-		
 	if (found > 1)
 		volunteerfound = new volunteer("","Not available due to multiple records", "Not available due to multiple records");
 		
