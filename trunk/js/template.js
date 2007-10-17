@@ -49,21 +49,21 @@ function checkUserStatus()
 {
 	frameThoughtWorks = document.getElementById('thoughtworks');
 	frameCalendar = document.getElementById('calendar');
-	buttonInOut = document.getElementById('inout');
+	linkInOut = document.getElementById('inout');
 	
 	if(myToken)
 	{	
 		frameThoughtWorks.style.visibility = 'visible';
 		frameCalendar.style.visibility = 'visible';
 		
-		buttonInOut.value = 'Click Here to Logout';
+		linkInOut.innerHTML = 'Click Here to Logout';
 	}
 	else
 	{	
 		frameThoughtWorks.style.visibility = 'hidden';
 		frameCalendar.style.visibility = 'hidden';
 		
-		buttonInOut.value = 'Click Here to Login';
+		linkInOut.innerHTML = 'Click Here to Login';
 	}	
 };
 

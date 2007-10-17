@@ -1,0 +1,40 @@
+#header
+{
+	position: relative;
+	width: 100%;
+	height: 10%;
+	border: none;
+	padding: 0;
+}
+
+#header h1
+{
+	float: left;
+	clear: none;
+	font-size: xx-large;
+	font-style: bolder;
+}
+
+#header a
+{
+	float: right;
+	clear: none;
+}
+
+#thoughtworks
+{
+	position: relative;
+	visibility: hidden;
+	width: 25%;
+	height: 90%; 
+	border: none;
+	padding: 0;
+}
+
+#calendar
+{
+	position: relative;
+	visibility: hidden;
+	width: 74%;
+	height: 89%;
+}
