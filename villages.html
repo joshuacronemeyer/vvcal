@@ -11,14 +11,14 @@
 	</script>
 	<link rel="stylesheet" href="css/style.css" TYPE="text/css" MEDIA="screen">
 </head>
-<body>
+<body onload="toggleDateType();">
 	<img src="images/pixel.gif" style="position: absolute; top: -10; left: 0;"/>
 	<div align="center">
 		<form name="dateForm">
 			<table><tr>
-				<td><input type="radio" name="dateType" value="single" checked="checked" onclick="showEndDate(false);"> Single Day</td>
+				<td><input type="radio" name="dateType" value="single" checked="checked" onclick="toggleDateType();"> Single Day</td>
 				<td width="15" />
-				<td><input type="radio" name="dateType" value="range" onclick="showEndDate(true);"> Date Range</td>
+				<td><input type="radio" name="dateType" value="range" onclick="toggleDateType();"> Date Range</td>
 			</tr></table>
 		</form>
 		<div id="datesContainer">

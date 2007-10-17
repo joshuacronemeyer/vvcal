@@ -11,10 +11,10 @@ var msgNoVolunteers = "No volunteers scheduled for this village.";
 var beginSelectedDate;
 var endSelectedDate;
 
-function showEndDate(doShowEndDate)
+function toggleDateType()
 {
-	document.getElementById('endDateRow').style.display = (doShowEndDate == true) ? 'table-row' : 'none';
-	document.getElementById('firstDateLabel').innerHTML = (doShowEndDate == true) ? 'From:' : 'Date:';
+	document.getElementById('endDateRow').style.display = (isSingleDay() == true) ? 'none' : 'table-row';
+	document.getElementById('firstDateLabel').innerHTML = (isSingleDay() == true) ? 'Date:' : 'From:';
 };
 
 function initVillages() 
@@ -23,8 +23,12 @@ function initVillages()
 	var token = google.accounts.user.checkLogin(SCOPE);
 	myService = new google.gdata.calendar.CalendarService("Village Volunteer Calendar");
 	
-	
-	if (token) { refreshVillageItinerary(startDate_Object.picked.date, endDate_Object.picked.date); }
+	if (token) { 
+		var startDate = startDate_Object.picked.date;
+		var endDate = deriveEndDate();
+		if (dateRangeIsValid(startDate, endDate) == true) { refreshVillageItinerary(startDate, endDate); }
+		else { alert("Date range is invalid. Please ensure that the start date precedes the end date."); }
+	}
 };
 
 function handleError(e) 
@@ -50,12 +54,23 @@ function isSingleDay()
 	return document.dateForm.dateType[0].checked;
 };
 
+function deriveEndDate()
+{
+	var result = (isSingleDay() == true) ? new Date(startDate_Object.picked.date) : new Date(endDate_Object.picked.date);
+	result.setDate(result.getDate() + 1);
+	return result;
+};
+
+function dateRangeIsValid(firstDate, secondDate)
+{
+	return (secondDate > firstDate) ? true : false;
+};
+
 function refreshVillageItinerary(startDate, endDate)
 {
 	/* set global variables beginSelectedDate and endSelectedDate - need them when examining the feed */
-	beginSelectedDate = new Date(startDate);
-	endSelectedDate = (isSingleDay() == true) ? new Date(startDate) : new Date(endDate);
-	endSelectedDate.setDate(endSelectedDate.getDate() + 1);
+	beginSelectedDate = startDate;
+	endSelectedDate = endDate;
 	
 	myService.getAllCalendarsFeed(FEED, handleAllCalendarsForVillages, handleError);
 };
