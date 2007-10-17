@@ -3,14 +3,15 @@
 	<script type="text/javascript" src="http://www.google.com/jsapi?key=ABQIAAAAKYmOqEXuSTJLmIQnR5PK0BT2yXp_ZAY8_ufC3CFXhHIE1NvwkxRY1xD4kh0qjbX_xcdZnGjjKoA4cA"></script>
 	<script type="text/javascript" src="js/volunteers.js"></script>
 </head>
-<body onload="populateVolunteerList()">
+<body>
 	<img src="images/pixel.gif" style="position: absolute; top: -10; left: 0;"/>
 	<div align="center">
-		<b>Please Select A Volunteer:</b><br>
-		<span id="combo" name="combo"></span>
-		<hr width="80%" align="center">
+	<input type="button" value="Click to get list of volunteers from calendars" onclick="initVolunteers()" />
+	<select name='volunteers' id='volunteers' onChange='displayInfo(this.options[this.selectedIndex].value)'>
+	</select>
+	<hr width="80%" align="center">
 	</div>
-	<span id="info" name="info">&nbsp;</span>
+	<div id="info" name="info"></div>
 	<br>
 	<span id="itinerary" name="itinerary">&nbsp;</span>
 </body>
