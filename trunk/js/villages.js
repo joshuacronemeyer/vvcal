@@ -10,6 +10,7 @@ var villageInfoString = "";
 var msgNoVolunteers = "No volunteers scheduled for this village.";
 var beginSelectedDate;
 var endSelectedDate;
+var boolIsSingleDay;
 
 function toggleDateType()
 {
@@ -68,9 +69,10 @@ function dateRangeIsValid(firstDate, secondDate)
 
 function refreshVillageItinerary(startDate, endDate)
 {
-	/* set global variables beginSelectedDate and endSelectedDate - need them when examining the feed */
+	/* set global variables for start/end dates and date inquiry type - need them when examining the feed */
 	beginSelectedDate = startDate;
 	endSelectedDate = endDate;
+	boolIsSingleDay = (isSingleDay() == true) ? true : false;
 	
 	myService.getAllCalendarsFeed(FEED, handleAllCalendarsForVillages, handleError);
 };
@@ -125,8 +127,8 @@ function handleVillageItinerary(feedRoot)
 	}
 
 	/* assumes village name is in <u> element that is first child of <p> with the calendarId id */
-	
-	availability = document.getElementById(calendarId).firstChild.innerHTML.replace(/(\d+) Beds/i, "maximum: " + getMaxOccupancy(entryCountPerDay) + " out of $1 Beds");
+	var maxStrMsg = (boolIsSingleDay == true) ? '' : 'maximum: ';
+	availability = document.getElementById(calendarId).firstChild.innerHTML.replace(/(\d+) Beds/i, maxStrMsg + getMaxOccupancy(entryCountPerDay) + " out of $1 Beds");
 	document.getElementById(calendarId).firstChild.innerHTML = availability;
 		
 	document.getElementById(calendarId).appendChild(entryListElement);
