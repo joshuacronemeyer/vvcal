@@ -5,10 +5,11 @@ var FEED = 'http://www.google.com/calendar/feeds/default/allcalendars/full';
 
 var myService;
 var volunteerList = new Array();
-volunteerList[0] = new volunteer("Select", "One", "Volunteer not selected", "Volunteer not selected");
-volunteerList[1] = new volunteer("Holly", "Bowen", "hbowen@thoughtworks.com", "555-111-1111");
-volunteerList[2] = new volunteer("Jeremy", "Stitz", "jstitz@thoughtworks.com", "555-222-2222");
-volunteerList[3] = new volunteer("Jimmy", "Staggs", "jstaggs@thoughtworks.com", "555-333-3333");
+volunteerList[0] = new volunteer("Select One", "Volunteer not selected", "Volunteer not selected");
+volunteerList[1] = new volunteer("Holly Bowen", "hbowen@thoughtworks.com", "555-111-1111");
+volunteerList[2] = new volunteer("Jeremy Stitz", "jstitz@thoughtworks.com", "555-222-2222");
+volunteerList[3] = new volunteer("Jimmy Staggs", "jstaggs@thoughtworks.com", "555-333-3333");
+volunteerList[4] = new volunteer("Holly Bowen", "hbowen@twu.com", "555-111-1111");
 
 
 volunteerCounter = 1;
@@ -43,10 +44,9 @@ function handleError(e)
 }
 
 
-function volunteer(firstName, lastName, email, phone) 
+function volunteer(fullName, email, phone) 
 {
-	this.firstName 	= firstName;
-	this.lastName = lastName;
+	this.fullName 	= fullName;
 	this.email = email;
 	this.phone = phone;
 }
@@ -83,7 +83,8 @@ function getVolunteerList(feedRoot)
 			option = document.createElement('option');
 			option.setAttribute('value', fullName);
 			option.innerHTML = fullName;
-			volunteerBox.appendChild(option);		
+			volunteerBox.appendChild(option);
+			addSortedNodeToElement(volunteerBox, option, false);
 		}
 	}
 };
@@ -123,11 +124,23 @@ function displayItinerary()
 }
 
 function getVolunteerInfo(fullName){
+	found = 0;
 	for (var i = 0; i < volunteerList.length; i++) {
-		if (fullName == volunteerList[i].firstName + " " + volunteerList[i].lastName)
-			return volunteerList[i];
+		if (fullName == volunteerList[i].fullName)
+		{
+			found ++;
+			volunteerfound = volunteerList[i];
+		}
 	}
-	return new volunteer("","","Not found", "Not found");
+	
+	if (found == 0)
+		volunteerfound = new volunteer("", "Not found", "Not found");
+		
+	if (found > 1)
+		volunteerfound = new volunteer("","Not available due to multiple records", "Not available due to multiple records");
+		
+	return volunteerfound;
+
 }
 
 
@@ -138,4 +151,20 @@ function removeAllChildNodesFrom(element)
 			element.removeChild(element.firstChild );
 		}
 	}
+};
+
+function addSortedNodeToElement(element, childNodeToInsert, doSortById)
+{
+	if (element.hasChildNodes() == true) {
+		var newId = (doSortById == true) ? childNodeToInsert.getAttribute('id') : childNodeToInsert.innerHTML;
+		for (i = 0; i < element.childNodes.length; i++) {
+			var childNode = element.childNodes[i];
+			var currentId = (doSortById == true) ? childNode.getAttribute('id') : childNode.innerHTML;
+			if (newId < currentId) {
+				element.insertBefore(childNodeToInsert, childNode);
+				return;
+			}
+		}
+	}
+	element.appendChild(childNodeToInsert);
 };
