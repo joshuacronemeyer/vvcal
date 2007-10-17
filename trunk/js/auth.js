@@ -24,7 +24,7 @@ function logout()
 {
 	google.accounts.user.logout();
 	
-	window.location = "./template.html";
+	window.location = "index.html";
 };
 
 function handleError(e) 
