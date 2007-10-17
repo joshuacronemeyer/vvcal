@@ -53,13 +53,14 @@ function volunteer(firstName, lastName, email, phone)
 
 function refreshVillageItinerary() {
 
-	
+
 	myService.getAllCalendarsFeed(FEED, handleAllCalendarsForVillages, handleError);
 };
 
 function handleAllCalendarsForVillages(feedRoot)
 {
-	
+	removeAllChildNodesFrom(document.getElementById('volunteers'));
+
 	/* loop through each calendar in the feed */
 	var calendars = feedRoot.feed.getEntries();
 	for (var i = 0; i < calendars.length; i++) {
@@ -133,4 +134,13 @@ function displayItinerary()
 	itineraryInfo = "<u><b>Itinerary Information</b></u><br>";
 		
 	document.getElementById('itinerary').innerHTML = itineraryInfo;
-}s
+}
+
+function removeAllChildNodesFrom(element)
+{
+	if (element.hasChildNodes()) {
+		while (element.childNodes.length > 0 ) {
+			element.removeChild(element.firstChild );
+		}
+	}
+};
