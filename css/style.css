@@ -38,3 +38,34 @@
 	width: 74%;
 	height: 89%;
 }
+
+FORM {
+	margin: 0;
+	padding: 0;
+}
+
+UL.volunteerList {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+DIV#datesContainer {
+	height: 60;
+}
+
+.dateButton {
+	margin-top: -2;
+	height: 18;
+	font-family: Tahoma, Arial;
+	font-size: 11;
+}
+
+#endDateRow {
+	display: none;
+}
+
+td.dateLabel {
+	font-weight: bold;
+	text-align: right;
+}

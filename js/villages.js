@@ -11,13 +11,20 @@ var msgNoVolunteers = "No volunteers scheduled for this village.";
 var beginSelectedDate;
 var endSelectedDate;
 
+function showEndDate(doShowEndDate)
+{
+	document.getElementById('endDateRow').style.display = (doShowEndDate == true) ? 'table-row' : 'none';
+	document.getElementById('firstDateLabel').innerHTML = (doShowEndDate == true) ? 'From:' : 'Date:';
+};
+
 function initVillages() 
 {
 	google.gdata.client.init(handleError);
 	var token = google.accounts.user.checkLogin(SCOPE);
 	myService = new google.gdata.calendar.CalendarService("Village Volunteer Calendar");
 	
-	if (token) { refreshVillageItinerary(date_Object.picked.date); }
+	
+	if (token) { refreshVillageItinerary(startDate_Object.picked.date, endDate_Object.picked.date); }
 };
 
 function handleError(e) 
@@ -38,10 +45,16 @@ function handleError(e)
 	}
 };
 
-function refreshVillageItinerary(selectedDate) {
+function isSingleDay()
+{
+	return document.dateForm.dateType[0].checked;
+};
+
+function refreshVillageItinerary(startDate, endDate)
+{
 	/* set global variables beginSelectedDate and endSelectedDate - need them when examining the feed */
-	beginSelectedDate = new Date(selectedDate);
-	endSelectedDate = new Date(selectedDate);
+	beginSelectedDate = new Date(startDate);
+	endSelectedDate = (isSingleDay() == true) ? new Date(startDate) : new Date(endDate);
 	endSelectedDate.setDate(endSelectedDate.getDate() + 1);
 	
 	myService.getAllCalendarsFeed(FEED, handleAllCalendarsForVillages, handleError);

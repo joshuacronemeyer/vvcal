@@ -9,18 +9,31 @@
 	 * Keep this notice intact for use.
 	 ***********************************************/
 	</script>
-	<link rel="stylesheet" href="css/example.css" TYPE="text/css" MEDIA="screen">
+	<link rel="stylesheet" href="css/style.css" TYPE="text/css" MEDIA="screen">
 </head>
 <body>
 	<img src="images/pixel.gif" style="position: absolute; top: -10; left: 0;"/>
 	<div align="center">
-		<b>Please Select A Date:</b><br>
-		<table>
-			<tr>
-				<td><script>DateInput('date', true, 'YYYY-MM-DD')</script></td>
-				<td><input type="button" value="Go" onclick="initVillages();" /></td>
-			</tr>
-		</table>
+		<form name="dateForm">
+			<table><tr>
+				<td><input type="radio" name="dateType" value="single" checked="checked" onclick="showEndDate(false);"> Single Day</td>
+				<td width="15" />
+				<td><input type="radio" name="dateType" value="range" onclick="showEndDate(true);"> Date Range</td>
+			</tr></table>
+		</form>
+		<div id="datesContainer">
+			<table>
+				<tr>
+					<td id="firstDateLabel" class="dateLabel">Date:</td>
+					<td><script>DateInput('startDate', true, 'YYYY-MM-DD')</script></td>
+					<td rowspan="2"><input type="button" class="dateButton" value="Go" onclick="initVillages();" /></td>
+				</tr>
+				<tr id="endDateRow">
+					<td class="dateLabel">To:</td>
+					<td><script>DateInput('endDate', true, 'YYYY-MM-DD')</script></td>
+				</tr>
+			</table>
+		</div>
 		<hr width="80%" align="center">
 	</div>
 	<div id="villageItinerary"></div>
