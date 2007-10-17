@@ -86,7 +86,6 @@ function getVolunteerList(feedRoot)
 	}
 };
 
-
 function checkForDuplicates(firstName, lastName){
 	for (var j = 0; j < volunteerList.length; j++){
 		if (volunteerList[j].firstName = firstName)
@@ -94,25 +93,6 @@ function checkForDuplicates(firstName, lastName){
 	}
 	return false;
 }
-	
-function populateVolunteerList()
-{
-	comboBox = "<b>Please Select A Volunteer:</b><br>";
-	comboBox += "";
-	
-	for (i = 0 ;i<volunteerList.length; i++)
-	{
-		if (i==0)
-			comboBox += "<option value='" + i +"' selected='yes'>" + volunteerList[i].firstName + " " + volunteerList[i].lastName + "</option>";
-		else
-			comboBox += "<option value='" + i +"'>" + volunteerList[i].firstName + " " + volunteerList[i].lastName + "</option>";
-	}
-	
-	comboBox += "</select>";
-	
-	document.getElementById('combo').innerHTML = comboBox;
-}
-
 
 function displayInfo(index)
 {
