@@ -14,7 +14,7 @@ var boolIsSingleDay;
 
 function toggleDateType()
 {
-	document.getElementById('endDateRow').style.display = (isSingleDay() == true) ? 'none' : 'table-row';
+	document.getElementById('endDateRow').style.display = (isSingleDay() == true) ? 'none' : '';
 	document.getElementById('firstDateLabel').innerHTML = (isSingleDay() == true) ? 'Date:' : 'From:';
 };
 
