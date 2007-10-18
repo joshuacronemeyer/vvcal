@@ -54,10 +54,17 @@
 		$rt=mysql_query($query);          // query executed
 		echo mysql_error();                    // if any error is there that will be printed to the screen
 
-		while($nt=mysql_fetch_array($rt)){
-		echo "Email: $nt[Email]<br>";     // name class and mark will be printed with one line break at the end
-		echo "Phone: $nt[Phone]<br>";     // name class and mark will be printed with one line break at the end
-	}
+		if (mysql_num_rows == 1)
+		{
+			while($nt=mysql_fetch_array($rt)){
+			echo "Email: $nt[Email]<br>";     // name class and mark will be printed with one line break at the end
+			echo "Phone: $nt[Phone]<br>";     // name class and mark will be printed with one line break at the end
+			}
+		} else if (mysql_num_rows > 1){
+			echo "Multiple Volunteers with same name found.<br>";     // name class and mark will be printed with one line break at the end
+		} else {
+			echo "Volunteer not found.<br>";     // name class and mark will be printed with one line break at the end
+		}
 	}
 	?>
 	</div>
