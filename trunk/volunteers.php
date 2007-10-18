@@ -4,10 +4,11 @@
 	<script type="text/javascript" src="js/volunteers.js"></script>
 	<script type="text/javascript">
 	function reload(form){
-	var val=form.volunteers.options[form.volunteers.options.selectedIndex].value;
-	var firstNameVal = val.substring(0, val.indexOf(" "));
-	var lastNameVal = val.substring(val.indexOf(" ") + 1);
-	self.location="volunteers.php?firstName=" + firstNameVal + "&lastName=" + lastNameVal;
+		var val=form.volunteers.options[form.volunteers.options.selectedIndex].value;
+		var firstNameVal = val.substring(0, val.indexOf(" "));
+		var lastNameVal = val.substring(val.indexOf(" ") + 1);
+		self.location="volunteers.php?firstName=" + firstNameVal + "&lastName=" + lastNameVal;
+		refreshVillageItinerary();
 	}
 </script>
 
@@ -23,8 +24,6 @@
 	// name of database
 	$dbname='villagev_villagedata';
 
-	////////////// Do not  edit below/////////
-
 	connecttodb($servername,$dbname,$dbusername,$dbpassword);
 	function connecttodb($servername,$dbname,$dbuser,$dbpassword)
 	{
@@ -34,8 +33,6 @@
 	mysql_select_db("$dbname",$link) or die ("could not open db".mysql_error());
 	}
 ?>
-
-
 
 	<img src="images/pixel.gif" style="position: absolute; top: -10; left: 0;"/>
 	<div align="center">
@@ -51,20 +48,17 @@
 	if (!empty($_GET['firstName'])){
 
 		$query="select * from people where FirstName='".$_GET['firstName']."' and LastName='".$_GET['lastName']."'";
-		$rt=mysql_query($query);          // query executed
-		echo mysql_error();                    // if any error is there that will be printed to the screen
+		$rt=mysql_query($query);
+		echo mysql_error();
 
-		if (mysql_num_rows == 1)
-		{
-			while($nt=mysql_fetch_array($rt)){
-			echo "Email: $nt[Email]<br>";     // name class and mark will be printed with one line break at the end
-			echo "Phone: $nt[Phone]<br>";     // name class and mark will be printed with one line break at the end
-			}
-		} else if (mysql_num_rows > 1){
-			echo "Multiple Volunteers with same name found.<br>";     // name class and mark will be printed with one line break at the end
-		} else {
-			echo "Volunteer not found.<br>";     // name class and mark will be printed with one line break at the end
+		//echo mysql_num_rows($rt);
+		while($nt=mysql_fetch_array($rt)){
+			echo "Email: $nt[Email]<br>";
+			echo "Phone: $nt[Phone]<br>";
 		}
+
+
+
 	}
 	?>
 	</div>

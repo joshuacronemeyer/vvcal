@@ -72,6 +72,7 @@ function handleAllCalendarsForVillages(feedRoot)
 	
 };
 
+
 function getVolunteerList(feedRoot)
 {
 	var entries = feedRoot.feed.getEntries();
