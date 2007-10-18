@@ -51,13 +51,19 @@
 		$rt=mysql_query($query);
 		echo mysql_error();
 
-		//echo mysql_num_rows($rt);
-		while($nt=mysql_fetch_array($rt)){
-			echo "Email: $nt[Email]<br>";
-			echo "Phone: $nt[Phone]<br>";
+
+		if (mysql_num_rows($rt) == 0){
+			echo "Volunteer not found";
+		}
+		if (mysql_num_rows($rt) == 1){
+			$nt=mysql_fetch_array($rt);
+			echo "Email: $nt[Email]<br>Phone: $nt[Phone]<br>";
+		}
+		if (mysql_num_rows($rt) > 1){
+			echo "Multiple volunteers found";
 		}
 
-
+		echo "<script type='text/javascript'>initVolunteers()</script>";
 
 	}
 	?>
