@@ -96,8 +96,14 @@ function handleAllCalendarsForVillages(feedRoot)
 		villageElement.appendChild(createElementWithText('u', calendarTitle));
 		villageElement.appendChild(document.createElement('br'));
 		addSortedNodeToElement(document.getElementById('villageItinerary'), villageElement, true);
-
-		myService.getEventsFeed(calendar.getLink().getHref(), handleVillageItinerary, handleError);
+		
+		/* construct date range query for calendar */
+		var villageQuery = new google.gdata.calendar.CalendarEventQuery(calendar.getLink().getHref());
+		villageQuery.setMinimumStartTime(new google.gdata.DateTime(beginSelectedDate, true));
+		villageQuery.setMaximumStartTime(new google.gdata.DateTime(endSelectedDate, true));
+		villageQuery.setSingleEvents(true);
+		villageQuery.setMaxResults(1000);
+		myService.getEventsFeed(villageQuery, handleVillageItinerary, handleError);
 	}
 };
 
@@ -113,12 +119,8 @@ function handleVillageItinerary(feedRoot)
 		var entry = entries[i];
 		var times = entry.getTimes();
 		if (times.length > 0) {
-			var entryStartDate = times[0].getStartTime().getDate();
-			var entryEndDate = times[0].getEndTime().getDate();
-			if (entryStartDate < endSelectedDate && entryEndDate > beginSelectedDate) {
-				addSortedNodeToElement(entryListElement, createElementWithText('li', entry.getTitle().getText()), false);
-				updateEntryCountPerDay(entryCountPerDay, entryStartDate, entryEndDate);
-			}
+			addSortedNodeToElement(entryListElement, createElementWithText('li', entry.getTitle().getText()), false);
+			updateEntryCountPerDay(entryCountPerDay, times[0].getStartTime().getDate(), times[0].getEndTime().getDate());
 		}
 	}
 	

@@ -6,7 +6,9 @@ var FEED = 'http://www.google.com/calendar/feeds/default/allcalendars/full';
 var myService;
 var volunteerList = new Array();
 var volunteerCounter = 0;
+var selectedVolunteerName;
 
+var monthAbbr = initializeMonthArray();
 volunteerList[0] = new volunteer("Select One", "Volunteer Not Selected", "Volunteer Not Selected");
 volunteerList[1] = new volunteer("Jimmy Staggs", "jimmy@twu.com", "111-111-1111");
 volunteerList[2] = new volunteer("Jeremy Stitz", "jeremy@twu.com", "222-222-2222");
@@ -106,19 +108,105 @@ function isDuplicated(fullName){
 	return false;
 }
 
-function displayInfo(index)
+function displayInfo(volunteerName)
 {
-	displayItinerary(index);
+	displayContactInfo(volunteerName);
+	displayItinerary(volunteerName);
 }
 
 
-function displayItinerary()
+function displayItinerary(volunteerName)
 {
-	itineraryInfo = "<u><b>Itinerary Information</b></u><br>";
+	selectedVolunteerName = volunteerName;
+
+	/* reset volunteer itinerary info on page */
+	removeAllChildNodesFrom(document.getElementById('itineraryTable'));
+
+	/* make itinerary title visible */
+	var volunteerItinerary = document.getElementById('itineraryHeader').style.display = 'inline';
+
+	myService = new google.gdata.calendar.CalendarService("Village Volunteer Calendar");
+	myService.getAllCalendarsFeed(FEED, handleAllCalendarsForSingleVolunteer, handleError);
+}
+
+function handleAllCalendarsForSingleVolunteer(feedRoot)
+{
+	/* loop through each calendar in the feed */
+	var calendars = feedRoot.feed.getEntries();
+	for (var i = 0; i < calendars.length; i++) {
+		var calendar = calendars[i];
+
+		/* construct volunteer name query for calendar */
+		var volunteerQuery = new google.gdata.calendar.CalendarEventQuery(calendar.getLink().getHref());
+		volunteerQuery.setFullTextQuery(selectedVolunteerName);
+		volunteerQuery.setFutureEvents(true);
+		volunteerQuery.setSingleEvents(true);
+		volunteerQuery.setMaxResults(1000);
+		myService.getEventsFeed(volunteerQuery, handleVolunteerItinerary, handleError);
+	}
+};
+
+function handleVolunteerItinerary(feedRoot)
+{
+	var calendarId = feedRoot.feed.getTitle().getText();
+	var entries = feedRoot.feed.getEntries();
+	var entryTableElement = document.getElementById('itineraryTable');
+	
+	for (var i = 0; i < entries.length; i++) {
+		var entry = entries[i];
+		var times = entry.getTimes();
+		if (times.length > 0) {
+			var entryRowElement = document.createElement('tr');
+			
+			var calNameElement = createElementWithText('td', calendarId);
+			calNameElement.setAttribute('class', 'leftCol');
+			entryRowElement.appendChild(calNameElement);
+			
+			var dateRangeElement = createElementWithText('td', getDateStringFrom(times[0].getStartTime().getDate()) + " - " + getDateStringFrom(times[0].getEndTime().getDate()));
+			dateRangeElement.setAttribute('class', 'rightCol');
+			entryRowElement.appendChild(dateRangeElement);
+			
+			entryRowElement.setAttribute('id', times[0].getStartTime().getDate().getTime());
+			addSortedNodeToElement(entryTableElement, entryRowElement, true);
+		}
+	}
+};
+
+function getDateStringFrom(date)
+{
+	var dayString = '' + date.getDate();
+	if (dayString.length < 2) dayString = "0" + dayString;
+	var result = monthAbbr[date.getMonth()];
+	result += " " + dayString;
+	result += " " + date.getFullYear();
+	return result;
+	
+};
+
+function getVolunteerInfo(fullName){
+	found = 0;
+	volunteerfound = new volunteer("", "Not found", "Not found");
+	for (var i = 0; i < volunteerList.length; i++) {
+		if (fullName == volunteerList[i].fullName)
+		{
+			found ++;
+			volunteerfound = volunteerList[i];
+		}
+	}
+	
+	if (found > 1)
+		volunteerfound = new volunteer("","Not available due to multiple records", "Not available due to multiple records");
 		
-	document.getElementById('itinerary').innerHTML = itineraryInfo;
+	return volunteerfound;
+
 }
 
+function createElementWithText(elementType, input)
+{
+	var result = document.createElement(elementType);
+	result.innerHTML = input;
+	return result;
+};
 
 function removeAllChildNodesFrom(element)
 {
@@ -145,4 +233,22 @@ function addSortedNodeToElement(element, childNodeToInsert, doSortById)
 		}
 	}
 	element.appendChild(childNodeToInsert);
+};
+
+function initializeMonthArray()
+{
+	var result = new Array();
+	result.push('Jan');
+	result.push('Feb');
+	result.push('Mar');
+	result.push('Apr');
+	result.push('May');
+	result.push('Jun');
+	result.push('Jul');
+	result.push('Aug');
+	result.push('Sep');
+	result.push('Oct');
+	result.push('Nov');
+	result.push('Dec');
+	return result;
 };

@@ -64,11 +64,30 @@ DIV#datesContainer {
 	font-size: 11;
 }
 
-#endDateRow {
+.hideOnPageLoad {
 	display: none;
 }
 
 td.dateLabel {
 	font-weight: bold;
+	text-align: right;
+}
+
+.sectionHeader {
+	font-weight: bold;
+	text-decoration: underline;
+}
+
+#itineraryTable, #volunteerItinerary {
+	width: 100%;
+}
+
+
+#itineraryTable TD .leftCol {
+	text-align: left;
+	padding-right: 10;
+}
+
+#itineraryTable TD .rightCol {
 	text-align: right;
 }

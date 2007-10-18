@@ -12,6 +12,7 @@
 	}
 </script>
 
+	<link rel="stylesheet" href="css/style.css" TYPE="text/css" MEDIA="screen">
 </head>
 <body>
 <?php
@@ -69,6 +70,14 @@
 	?>
 	</div>
 	<br>
-	<span id="itinerary" name="itinerary">&nbsp;</span>
+	<div id="volunteerItinerary" name="itinerary">
+		<span id="itineraryHeader" class="sectionHeader hideOnPageLoad">Itinerary Information</span>
+		<table id="itineraryTable" cellspacing="0" cellpadding="0"></table>
+	</div>
+	<?php
+	if (!empty($_GET['firstName'])){
+		echo "<script>displayItinerary('".$_GET['firstName']." ".$_GET['lastName']."')</script>";
+	}
+	?>
 </body>
 </html>
