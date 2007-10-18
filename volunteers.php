@@ -50,19 +50,19 @@
 		$query="select * from people where FirstName='".$_GET['firstName']."' and LastName='".$_GET['lastName']."'";
 		$rt=mysql_query($query);
 		echo mysql_error();
+		$returned_rows = mysql_num_rows($rt);
 
+		$msg = "Volunteer Not Found";
 
-		if (mysql_num_rows($rt) == 0){
-			echo "Volunteer not found";
-		}
-		if (mysql_num_rows($rt) == 1){
+		if ($returned_rows == 1){
 			$nt=mysql_fetch_array($rt);
-			echo "Email: $nt[Email]<br>Phone: $nt[Phone]<br>";
+			$msg = "Name: $nt[FirstName] $nt[LastName]<br>Email: $nt[Email]<br>Phone: $nt[Phone]<br>";
 		}
-		if (mysql_num_rows($rt) > 1){
-			echo "Multiple volunteers found";
+		if ($returned_rows > 1){
+			$msg = "Multiple volunteers found";
 		}
 
+		echo $msg;
 		echo "<script type='text/javascript'>initVolunteers()</script>";
 
 	}
