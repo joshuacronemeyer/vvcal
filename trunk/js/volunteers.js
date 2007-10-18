@@ -108,13 +108,6 @@ function isDuplicated(fullName){
 	return false;
 }
 
-function displayInfo(volunteerName)
-{
-	displayContactInfo(volunteerName);
-	displayItinerary(volunteerName);
-}
-
-
 function displayItinerary(volunteerName)
 {
 	selectedVolunteerName = volunteerName;
@@ -162,7 +155,9 @@ function handleVolunteerItinerary(feedRoot)
 			calNameElement.setAttribute('class', 'leftCol');
 			entryRowElement.appendChild(calNameElement);
 			
-			var dateRangeElement = createElementWithText('td', getDateStringFrom(times[0].getStartTime().getDate()) + " - " + getDateStringFrom(times[0].getEndTime().getDate()));
+			var startDate = times[0].getStartTime().getDate();
+			var endDate = new Date(times[0].getEndTime().getDate().getTime() - 1);
+			var dateRangeElement = createElementWithText('td', getDateStringFrom(startDate) + " - " + getDateStringFrom(endDate));
 			dateRangeElement.setAttribute('class', 'rightCol');
 			entryRowElement.appendChild(dateRangeElement);
 			
