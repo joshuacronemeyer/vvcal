@@ -2,6 +2,28 @@
 <head>
 	<script type="text/javascript" src="http://www.google.com/jsapi?key=ABQIAAAAKYmOqEXuSTJLmIQnR5PK0BT2yXp_ZAY8_ufC3CFXhHIE1NvwkxRY1xD4kh0qjbX_xcdZnGjjKoA4cA"></script>
 	<script type="text/javascript" src="js/volunteers.js"></script>
+	<?php
+		$servername='localhost';
+
+		// username and password to log onto db server
+		$dbusername='';
+		$dbpassword='password';
+
+		// name of database
+		$dbname='villagev_villagedata';
+
+		////////////// Do not  edit below/////////
+
+		connecttodb($servername,$dbname,$dbusername,$dbpassword);
+		function connecttodb($servername,$dbname,$dbuser,$dbpassword)
+		{
+		global $link;
+		$link=mysql_connect ("$servername","$dbuser","$dbpassword");
+		if(!$link){die("Could not connect to MySQL");}
+		mysql_select_db("$dbname",$link) or die ("could not open db".mysql_error());
+		}
+		$echo("Hello");
+	?>
 </head>
 <body>
 	<img src="images/pixel.gif" style="position: absolute; top: -10; left: 0;"/>
