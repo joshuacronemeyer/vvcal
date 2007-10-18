@@ -2,15 +2,18 @@ google.load("gdata", "1");
 google.setOnLoadCallback(init);
 
 var SCOPE = 'http://www.google.com/calendar/feeds/';
-var FEED  = 'http://www.google.com/calendar/feeds/default/owncalendars/full';
+var FEED  = 'http://www.google.com/calendar/feeds/default/allcalendars/full';
 
 var myService;
 var myToken;
 
 function init() 
-{	google.gdata.client.init(handleError);
+{	
+	google.gdata.client.init(handleError);
 	
 	myToken = google.accounts.user.checkLogin(SCOPE);
+	
+	checkUserStatus();
 	
 	myService = new google.gdata.calendar.CalendarService("Village Volunteer Calendar");
 };
