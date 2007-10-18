@@ -151,7 +151,7 @@ function handleVolunteerItinerary(feedRoot)
 		if (times.length > 0) {
 			var entryRowElement = document.createElement('tr');
 			
-			var calNameElement = createElementWithText('td', calendarId);
+			var calNameElement = createElementWithText('td', calendarId.replace(/ \(\d+ Beds\)/i, ''));
 			calNameElement.setAttribute('class', 'leftCol');
 			entryRowElement.appendChild(calNameElement);
 			
