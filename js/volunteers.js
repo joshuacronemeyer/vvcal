@@ -5,21 +5,14 @@ var FEED = 'http://www.google.com/calendar/feeds/default/allcalendars/full';
 
 var myService;
 var volunteerList = new Array();
-volunteerList[0] = new volunteer("Select One", "Volunteer not selected", "Volunteer not selected");
-volunteerList[1] = new volunteer("Holly Bowen", "hbowen@thoughtworks.com", "555-111-1111");
-volunteerList[2] = new volunteer("Jeremy Stitz", "jstitz@thoughtworks.com", "555-222-2222");
-volunteerList[3] = new volunteer("Jimmy Staggs", "jstaggs@thoughtworks.com", "555-333-3333");
-volunteerList[4] = new volunteer("Holly Bowen", "hbowen@twu.com", "555-111-1111");
-
-
-volunteerCounter = 0;
+var volunteerCounter = 0;
 
 function initVolunteers() 
 {
 	google.gdata.client.init(handleError);
 	var token = google.accounts.user.checkLogin(SCOPE);
 	myService = new google.gdata.calendar.CalendarService("Village Volunteer Calendar");
-	
+
 	if (token) { refreshVillageItinerary(); }
 	
 };
@@ -60,6 +53,7 @@ function refreshVillageItinerary() {
 function handleAllCalendarsForVillages(feedRoot)
 {
 	removeAllChildNodesFrom(document.getElementById('volunteers'));
+	volunteerCounter = 0;
 
 	/* loop through each calendar in the feed */
 	var calendars = feedRoot.feed.getEntries();
@@ -154,6 +148,8 @@ function removeAllChildNodesFrom(element)
 			element.removeChild(element.firstChild );
 		}
 	}
+	volunteerCounter = 0;
+
 };
 
 function addSortedNodeToElement(element, childNodeToInsert, doSortById)
