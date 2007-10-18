@@ -101,11 +101,11 @@ td.dateLabel {
 }
 
 
-#itineraryTable TD .leftCol {
+TD.leftCol {
 	text-align: left;
 	padding-right: 10;
 }
 
-#itineraryTable TD .rightCol {
+TD.rightCol {
 	text-align: right;
 }
