@@ -40,6 +40,7 @@
 	$dbname='villagev_villagedata';
 
 	connecttodb($servername,$dbname,$dbusername,$dbpassword);
+
 	function connecttodb($servername,$dbname,$dbuser,$dbpassword)
 	{
 	global $link;
@@ -59,7 +60,7 @@
 <?php
 	if (!empty($_GET['firstName'])){
 
-		$query="select * from people where FirstName='".$_GET['firstName']."'";
+		$query="select FirstName, MiddleName, LastName, Email, Phone from people where FirstName='".$_GET['firstName']."'";
 
 		if (!empty($_GET['lastName'])){
 			$query." and LastName='".$_GET['lastName']."'";
@@ -72,7 +73,8 @@
 		$rt=mysql_query($query);
 		echo mysql_error();
 		$returned_rows = mysql_num_rows($rt);
-		$msg = "Volunteer Not Found";
+		mysql_close($link);
+		$msg = "Volunteer (".$_GET['firstName']." ".$_GET['lastName'].") Not Found";
 
 		if ($returned_rows == 1){
 			$nt=mysql_fetch_array($rt);
@@ -83,11 +85,10 @@
 			}
 		}
 		if ($returned_rows > 1){
-			$msg = "Multiple volunteers found";
+			$msg = "Multiple volunteers found with same name: ".$_GET['firstName']." ".$_GET['lastName'];
 		}
 
 		echo $msg;
-		$returned_rows = 0;
 		echo "<script type='text/javascript'>initVolunteers()</script>";
 
 	}
