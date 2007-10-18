@@ -1,3 +1,4 @@
+/* Styles for index.html */
 #header
 {
 	height: 100px;
@@ -42,6 +43,7 @@
 	padding: 0;
 }
 
+/* Styles for villages.html */
 FORM {
 	margin: 0;
 	padding: 0;
@@ -71,6 +73,22 @@ DIV#datesContainer {
 td.dateLabel {
 	font-weight: bold;
 	text-align: right;
+}
+
+/* Styles for volunteers.php */
+#volunteerButton
+{
+	margin-top: 5px;
+	height: 18;
+	font-family: Tahoma, Arial;
+	font-size: 11;
+}
+
+#volunteers
+{
+	letter-spacing: .06em;
+	font-family: Verdana,Sans-Serif;
+	font-size: 11px;
 }
 
 .sectionHeader {

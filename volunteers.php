@@ -4,23 +4,27 @@
 	<script type="text/javascript" src="js/volunteers.js"></script>
 	<script type="text/javascript">
 	function reload(form){
-		var val=form.volunteers.options[form.volunteers.options.selectedIndex].value;
+		volunteersBox = document.getElementById('volunteers');
+		val = volunteersBox.options[volunteersBox.options.selectedIndex].value;
 		var firstNameVal = val.substring(0, val.indexOf(" "));
 		var lastNameVal = val.substring(val.indexOf(" ") + 1);
 		self.location="volunteers.php?firstName=" + firstNameVal + "&lastName=" + lastNameVal;
 		refreshVillageItinerary();
 	}
-</script>
-
+    </script>
+	<link rel="stylesheet" href="css/style.css" TYPE="text/css" MEDIA="screen">
 	<link rel="stylesheet" href="css/style.css" TYPE="text/css" MEDIA="screen">
 </head>
 <body>
+	
+	<img src="images/pixel.gif" style="position: absolute; top: -10; left: 0;"/>
+
 <?php
 	$servername='localhost';
 
 	// username and password to log onto db server
 	$dbusername='root';
-	$dbpassword='password';
+	$dbpassword='';
 
 	// name of database
 	$dbname='villagev_villagedata';
@@ -35,17 +39,14 @@
 	}
 ?>
 
-	<img src="images/pixel.gif" style="position: absolute; top: -10; left: 0;"/>
-	<div align="center">
-	<input type="button" name='volunteerButton' id='volunteerButton' value="Click to get list of volunteers" onclick="initVolunteers()" /><br><br>
-	<form name="populate" method="get">
-	<select name='volunteers' id='volunteers' onChange='reload(this.form)'>
-	</select>
-	</form>
-	<hr width="80%" align="center">
-	</div>
+	<input type="button" name='volunteerButton' id='volunteerButton' value="List Volunteers" onclick="initVolunteers()" /><br><br>
+	<select name='volunteers' id='volunteers' onChange='reload(this.form)'></select>
+
+	<hr width="80%" align="center" />
+
 	<div id="info" name="info">
-	<?php
+
+<?php
 	if (!empty($_GET['firstName'])){
 
 		$query="select * from people where FirstName='".$_GET['firstName']."' and LastName='".$_GET['lastName']."'";
@@ -67,17 +68,20 @@
 		echo "<script type='text/javascript'>initVolunteers()</script>";
 
 	}
-	?>
+?>
+
 	</div>
-	<br>
+	<br />
 	<div id="volunteerItinerary" name="itinerary">
 		<span id="itineraryHeader" class="sectionHeader hideOnPageLoad">Itinerary Information</span>
 		<table id="itineraryTable" cellspacing="0" cellpadding="0"></table>
 	</div>
-	<?php
+	
+<?php
 	if (!empty($_GET['firstName'])){
 		echo "<script>displayItinerary('".$_GET['firstName']." ".$_GET['lastName']."')</script>";
 	}
-	?>
+?>
+
 </body>
 </html>
