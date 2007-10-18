@@ -107,43 +107,15 @@ function isDuplicated(fullName){
 
 function displayInfo(index)
 {
-	displayContactInfo(index);
 	displayItinerary(index);
 }
 
-function displayContactInfo(index)
-{	
-	volunteerSelected = getVolunteerInfo(index);
-	contactInfo = "<u><b>Contact Information</b></u><br>";
-	contactInfo += "Email: " + volunteerSelected.email + "<br>";
-	contactInfo += "Phone: " + volunteerSelected.phone + "<br>";
-	
-	document.getElementById('info').innerHTML = contactInfo;
-}
 
 function displayItinerary()
 {
 	itineraryInfo = "<u><b>Itinerary Information</b></u><br>";
 		
 	document.getElementById('itinerary').innerHTML = itineraryInfo;
-}
-
-function getVolunteerInfo(fullName){
-	found = 0;
-	volunteerfound = new volunteer("", "Not found", "Not found");
-	for (var i = 0; i < volunteerList.length; i++) {
-		if (fullName == volunteerList[i].fullName)
-		{
-			found ++;
-			volunteerfound = volunteerList[i];
-		}
-	}
-	
-	if (found > 1)
-		volunteerfound = new volunteer("","Not available due to multiple records", "Not available due to multiple records");
-		
-	return volunteerfound;
-
 }
 
 
