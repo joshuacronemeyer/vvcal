@@ -40,28 +40,8 @@
 
 	<img src="images/pixel.gif" style="position: absolute; top: -10; left: 0;"/>
 
-<?php
-	$servername='localhost';
+<?php include 'dbconfig.php'; ?>
 
-	// username and password to log onto db server
-	$dbusername = 'root';
-	$dbpassword = 'password';
-
-	// name of database
-	$dbname  = 'villagev_villagedata';
-
-	connecttodb($servername,$dbname,$dbusername,$dbpassword);
-
-	function connecttodb($servername,$dbname,$dbuser,$dbpassword)
-	{
-		global $link;
-		$link = mysql_connect ("$servername","$dbuser","$dbpassword");
-
-		if(!$link){die("Could not connect to MySQL");}
-
-		mysql_select_db("$dbname",$link) or die ("could not open db".mysql_error());
-	}
-?>
 	<div align="center">
 		<input type="button" name='volunteerButton' id='volunteerButton' value="List Volunteers" onclick="initVolunteers()" /><br><br>
 		<select name='volunteers' id='volunteers' onChange='reload(this.form)'></select>
