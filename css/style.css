@@ -119,9 +119,15 @@ TD.rightCol {
 	text-align: right;
 }
 
-.contactinfo{
+.contactinfo {
 	font-family: Verdana,Sans-Serif;
-	font-size: 12px;
+	font-size: 11;
+}
+
+#contactInfoTable {
+	width: 100%;
+	font-family: Verdana,Sans-Serif;
+	font-size: 11;
 }
 
 TD.rightCol SPAN {
