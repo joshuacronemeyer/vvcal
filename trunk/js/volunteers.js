@@ -120,10 +120,10 @@ function displayItinerary(volunteerName)
 	initVolunteers();
 	
 	/* reset volunteer itinerary info on page */
-	removeAllChildNodesFrom(document.getElementById('itineraryTable'));
+	removeAllChildNodesFrom(document.getElementById('itineraryTblBody'));
 
 	/* make itinerary title visible */
-	var volunteerItinerary = document.getElementById('itineraryHeader').style.display = 'inline';
+	document.getElementById('itineraryHeader').style.display = 'inline';
 
 	myService.getAllCalendarsFeed(FEED, handleAllCalendarsForSingleVolunteer, handleError);
 }
@@ -150,7 +150,7 @@ function handleVolunteerItinerary(feedRoot)
 {
 	var calendarId = feedRoot.feed.getTitle().getText();
 	var entries = feedRoot.feed.getEntries();
-	var entryTableElement = document.getElementById('itineraryTable');
+	var entryTableElement = document.getElementById('itineraryTblBody');
 	
 	for (var i = 0; i < entries.length; i++) {
 		var entry = entries[i];

@@ -96,16 +96,23 @@ td.dateLabel {
 	text-decoration: underline;
 }
 
-#itineraryTable, #volunteerItinerary {
+.itineraryTbl {
 	width: 100%;
+	border-collapse: collapse;
+}
+
+.itineraryTbl TD {
+	border-top: 1px solid #CCC; 
+	border-bottom: 1px solid #CCC; 
+	vertical-align: top;
+	padding-top: 3;
+	padding-bottom: 3;
 }
 
 
 TD.leftCol {
 	text-align: left;
-	vertical-align: top;
 	padding-right: 10;
-	padding-bottom: 5;
 }
 
 TD.rightCol {
