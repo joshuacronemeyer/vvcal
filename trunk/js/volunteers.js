@@ -4,7 +4,6 @@ var SCOPE = 'http://www.google.com/calendar/feeds/';
 var FEED = 'http://www.google.com/calendar/feeds/default/allcalendars/full';
 
 var myService;
-var volunteerCounter = 0;
 var selectedVolunteerName;
 
 var monthAbbr = initializeMonthArray();
@@ -40,9 +39,13 @@ function handleError(e)
 
 function handleAllCalendarsForVolunteers(feedRoot)
 {
-	removeAllChildNodesFrom(document.getElementById('volunteers'));
-	volunteerCounter = 0;
-
+	var volunteerBox = document.getElementById('volunteers');
+	removeAllChildNodesFrom(volunteerBox);
+	
+	selectAllOption = createElementWithText('option', "--- Select One ---");
+	selectAllOption.setAttribute('value', '');
+	volunteerBox.appendChild(selectAllOption);
+	
 	/* loop through each calendar in the feed */
 	var calendars = feedRoot.feed.getEntries();
 	
@@ -66,14 +69,9 @@ function getVolunteerList(feedRoot)
 		var entry = entries[i];
 		var fullName = entry.getTitle().getText();
 		if (!isDuplicated(fullName)){
-			if (volunteerCounter == 0)
-				fullName = " Select One";		
-			option = document.createElement('option');
+			option = createElementWithText('option', fullName);
 			option.setAttribute('value', fullName);
-			option.innerHTML = fullName;
-			volunteerBox.appendChild(option);
 			addSortedNodeToElement(volunteerBox, option, false);
-			volunteerCounter ++;
 		}
 	}
 
