@@ -3,22 +3,30 @@
 	<script type="text/javascript" src="http://www.google.com/jsapi?key=ABQIAAAAKYmOqEXuSTJLmIQnR5PK0BT2yXp_ZAY8_ufC3CFXhHIE1NvwkxRY1xD4kh0qjbX_xcdZnGjjKoA4cA"></script>
 	<script type="text/javascript" src="js/volunteers.js"></script>
 	<script type="text/javascript">
-	function reload(form){
+	function reload(form)
+	{
 		volunteersBox = document.getElementById('volunteers');
 		val = volunteersBox.options[volunteersBox.options.selectedIndex].value;
 		if (val.indexOf(" ") == -1)
 		{
 			var firstNameVal = val;
-		} else {
+		}
+		else
+		{
 			var firstNameVal = val.substring(0, val.indexOf(" "));
 			var remainingName = val.substring(val.indexOf(" ") + 1);
-			if (remainingName.indexOf(" ") == -1){
+
+			if (remainingName.indexOf(" ") == -1)
+			{
 				var lastNameVal = remainingName
-			} else {
+			}
+			else
+			{
 				var middleNameVal = remainingName.substring(0, remainingName.indexOf(" "));
 				var lastNameVal = remainingName.substring(remainingName.indexOf(" ") + 1);
 			}
 		}
+
 		self.location="volunteers.php?firstName=" + firstNameVal + "&middleName=" + middleNameVal + "&lastName=" + lastNameVal;
 		refreshVillageItinerary();
 	}
@@ -33,28 +41,29 @@
 	$servername='localhost';
 
 	// username and password to log onto db server
-	$dbusername='root';
-	$dbpassword='password';
+	$dbusername = 'root';
+	$dbpassword = 'password';
 
 	// name of database
-	$dbname='villagev_villagedata';
+	$dbname  = 'villagev_villagedata';
 
 	connecttodb($servername,$dbname,$dbusername,$dbpassword);
 
 	function connecttodb($servername,$dbname,$dbuser,$dbpassword)
 	{
-	global $link;
-	$link=mysql_connect ("$servername","$dbuser","$dbpassword");
-	if(!$link){die("Could not connect to MySQL");}
-	mysql_select_db("$dbname",$link) or die ("could not open db".mysql_error());
+		global $link;
+		$link = mysql_connect ("$servername","$dbuser","$dbpassword");
+
+		if(!$link){die("Could not connect to MySQL");}
+
+		mysql_select_db("$dbname",$link) or die ("could not open db".mysql_error());
 	}
 ?>
-
-	<input type="button" name='volunteerButton' id='volunteerButton' value="List Volunteers" onclick="initVolunteers()" /><br><br>
-	<select name='volunteers' id='volunteers' onChange='reload(this.form)'></select>
-
+	<div align="center">
+		<input type="button" name='volunteerButton' id='volunteerButton' value="List Volunteers" onclick="initVolunteers()" /><br><br>
+		<select name='volunteers' id='volunteers' onChange='reload(this.form)'></select>
+	</div>
 	<hr width="80%" align="center" />
-
 	<div id="info" name="info">
 
 <?php
