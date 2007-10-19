@@ -10,13 +10,6 @@ var selectedVolunteerName;
 
 var monthAbbr = initializeMonthArray();
 
-/*
-volunteerList[0] = new volunteer("Select One", "Volunteer Not Selected", "Volunteer Not Selected");
-volunteerList[1] = new volunteer("Jimmy Staggs", "jimmy@twu.com", "111-111-1111");
-volunteerList[2] = new volunteer("Jeremy Stitz", "jeremy@twu.com", "222-222-2222");
-volunteerList[3] = new volunteer("Holly Bowen", "holly@twu.com", "333-333-3333");
-*/
-
 function initVolunteers() 
 {
 	google.gdata.client.init(handleError);
@@ -27,6 +20,14 @@ function initVolunteers()
 	
 };
 
+
+function initService()
+{
+	var token = google.accounts.user.checkLogin(SCOPE);
+	myService = new google.gdata.calendar.CalendarService("Village Volunteer Calendar");
+
+	if (token) { refreshVillageItinerary(); }
+}
 
 function handleError(e) 
 {
@@ -49,7 +50,7 @@ function handleError(e)
 
 function volunteer(fullName, email, phone) 
 {
-	this.fullName 	= fullName;
+	this.fullName = fullName;
 	this.email = email;
 	this.phone = phone;
 }
@@ -67,7 +68,9 @@ function handleAllCalendarsForVillages(feedRoot)
 
 	/* loop through each calendar in the feed */
 	var calendars = feedRoot.feed.getEntries();
-	for (var i = 0; i < calendars.length; i++) {
+	
+	for (var i = 0; i < calendars.length; i++) 
+	{
 		var calendar = calendars[i];
 		if (!calendar.getSelected().getValue()) { continue; }
 		
@@ -114,18 +117,20 @@ function displayItinerary(volunteerName)
 {
 	selectedVolunteerName = volunteerName;
 
+	initVolunteers();
+	
 	/* reset volunteer itinerary info on page */
 	removeAllChildNodesFrom(document.getElementById('itineraryTable'));
 
 	/* make itinerary title visible */
 	var volunteerItinerary = document.getElementById('itineraryHeader').style.display = 'inline';
 
-	myService = new google.gdata.calendar.CalendarService("Village Volunteer Calendar");
 	myService.getAllCalendarsFeed(FEED, handleAllCalendarsForSingleVolunteer, handleError);
 }
 
 function handleAllCalendarsForSingleVolunteer(feedRoot)
 {
+
 	/* loop through each calendar in the feed */
 	var calendars = feedRoot.feed.getEntries();
 	for (var i = 0; i < calendars.length; i++) {
@@ -150,7 +155,7 @@ function handleVolunteerItinerary(feedRoot)
 	for (var i = 0; i < entries.length; i++) {
 		var entry = entries[i];
 		var times = entry.getTimes();
-		if (times.length > 0) {
+		if (times.length > 0) {		
 			var entryRowElement = document.createElement('tr');
 			
 			var calNameElement = createElementWithText('td', calendarId.replace(/ \(\d+ Beds\)/i, ''));
@@ -217,7 +222,7 @@ function removeAllChildNodesFrom(element)
 };
 
 function addSortedNodeToElement(element, childNodeToInsert, doSortById)
-{
+{	
 	if (element.hasChildNodes() == true) {
 		var newId = (doSortById == true) ? childNodeToInsert.getAttribute('id') : childNodeToInsert.innerHTML;
 		for (i = 0; i < element.childNodes.length; i++) {

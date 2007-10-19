@@ -72,7 +72,6 @@
 		$rt=mysql_query($query);
 		echo mysql_error();
 		$returned_rows = mysql_num_rows($rt);
-		mysql_close($link);
 
 		$msg = "Contact Information for ".$fullName." Not Found";
 
@@ -84,22 +83,22 @@
 			$msg = "Multiple volunteers found with same name: ".$fullName;
 		}
 
-		echo $msg;
-		echo "<script type='text/javascript'>initVolunteers()</script>";
+		mysql_close($link);
 
+		echo $msg;
 	}
 ?>
 
 	</div>
-	<br />
+	<br>
 	<div id="volunteerItinerary" name="itinerary">
 		<span id="itineraryHeader" class="sectionHeader hideOnPageLoad">Itinerary Information</span>
-		<table id="itineraryTable" cellspacing="0" cellpadding="0"></table>
+		<table cellspacing="0" cellpadding="0"><tbody id="itineraryTable" ></tbody></table>
 	</div>
 
 <?php
 	if (!empty($_GET['firstName'])){
-		echo "<script>displayItinerary('".$_GET['firstName']." ".$_GET['lastName']."')</script>";
+		echo "<script type=\"text/javascript\">displayItinerary('".$_GET['firstName']." ".$_GET['lastName']."')</script>";
 	}
 ?>
 
