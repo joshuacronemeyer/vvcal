@@ -77,15 +77,19 @@
 
 		if ($returned_rows == 1){
 			$nt=mysql_fetch_array($rt);
-			$msg = "Name: ".$nt[FirstName]." ".$nt[MiddleName]." ".$nt[LastName]."<br>Email: $nt[Email]<br>Phone: $nt[Phone]<br>";
+			$msg = "<table id='contactInfoTable' cellspacing='10' cellpadding='0'>";
+			$msg = $msg . "<tr><td>Name:</td><td>$nt[FirstName] $nt[MiddleName] $nt[LastName]</td></tr>";
+			$msg = $msg . "<tr><td>Email:</td><td>$nt[Email]</td></tr>";
+			$msg = $msg . "<tr><td>Phone:</td><td>$nt[Phone]</td></tr></table>";
 		}
 		if ($returned_rows > 1){
 			$msg = "Multiple volunteers found with same name: ".$fullName;
 		}
-
-		mysql_close($link);
-
+		echo "<span class ='contactinfo'>";
 		echo $msg;
+		echo "</span>";
+		echo "<script type='text/javascript'>initVolunteers()</script>";
+		mysql_close($link);
 	}
 ?>
 

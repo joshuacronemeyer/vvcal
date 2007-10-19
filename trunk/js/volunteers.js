@@ -185,24 +185,6 @@ function getDateStringFrom(date)
 	
 };
 
-function getVolunteerInfo(fullName){
-	found = 0;
-	volunteerfound = new volunteer("", "Not found", "Not found");
-	for (var i = 0; i < volunteerList.length; i++) {
-		if (fullName == volunteerList[i].fullName)
-		{
-			found ++;
-			volunteerfound = volunteerList[i];
-		}
-	}
-	
-	if (found > 1)
-		volunteerfound = new volunteer("","Not available due to multiple records", "Not available due to multiple records");
-		
-	return volunteerfound;
-
-}
-
 function createElementWithText(elementType, input)
 {
 	var result = document.createElement(elementType);
