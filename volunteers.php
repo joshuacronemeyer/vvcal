@@ -95,10 +95,9 @@
 
 	</div>
 	<br>
-	<div id="volunteerItinerary" name="itinerary">
-		<span id="itineraryHeader" class="sectionHeader hideOnPageLoad">Itinerary Information</span>
-		<table cellspacing="0" cellpadding="0" width="100%"><tbody id="itineraryTable"></tbody></table>
-	</div>
+
+	<span id="itineraryHeader" class="sectionHeader hideOnPageLoad">Itinerary Information</span>
+	<table class="itineraryTbl" cellspacing="0" cellpadding="0"><tbody id="itineraryTblBody"></tbody></table>
 
 <?php
 	if (!empty($_GET['firstName'])){
