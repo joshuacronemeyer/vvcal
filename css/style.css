@@ -110,10 +110,14 @@ TD.leftCol {
 
 TD.rightCol {
 	text-align: right;
-	vertical-align: top;
-	padding-bottom: 5;
+}
+
+.contactinfo{
+	font-family: Verdana,Sans-Serif;
+	font-size: 12px;
 }
 
 TD.rightCol SPAN {
 	white-space: nowrap;
 }
+
