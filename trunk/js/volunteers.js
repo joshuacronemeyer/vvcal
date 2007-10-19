@@ -4,6 +4,8 @@ var SCOPE = 'http://www.google.com/calendar/feeds/';
 var FEED = 'http://www.google.com/calendar/feeds/default/allcalendars/full';
 
 var myService;
+var volunteerList = new Array();
+var volunteerCounter = 0;
 var selectedVolunteerName;
 
 var monthAbbr = initializeMonthArray();
@@ -17,6 +19,15 @@ function initVolunteers()
 	if (token) { myService.getAllCalendarsFeed(FEED, handleAllCalendarsForVolunteers, handleError); }
 	
 };
+
+
+function initService()
+{
+	var token = google.accounts.user.checkLogin(SCOPE);
+	myService = new google.gdata.calendar.CalendarService("Village Volunteer Calendar");
+
+	if (token) { refreshVillageItinerary(); }
+}
 
 function handleError(e) 
 {
@@ -37,15 +48,13 @@ function handleError(e)
 }
 
 
+
+
 function handleAllCalendarsForVolunteers(feedRoot)
 {
-	var volunteerBox = document.getElementById('volunteers');
-	removeAllChildNodesFrom(volunteerBox);
-	
-	selectAllOption = createElementWithText('option', "--- Select One ---");
-	selectAllOption.setAttribute('value', '');
-	volunteerBox.appendChild(selectAllOption);
-	
+	removeAllChildNodesFrom(document.getElementById('volunteers'));
+	addSelectOne();
+
 	/* loop through each calendar in the feed */
 	var calendars = feedRoot.feed.getEntries();
 	
@@ -59,6 +68,17 @@ function handleAllCalendarsForVolunteers(feedRoot)
 	
 };
 
+function addSelectOne(){
+	var volunteerBox = document.getElementById('volunteers');
+
+	fullName = " Select One";
+	option = document.createElement('option');
+	option.setAttribute('value', fullName);
+	option.innerHTML = fullName;
+	volunteerBox.appendChild(option);
+	addSortedNodeToElement(volunteerBox, option, false);
+}
+
 
 function getVolunteerList(feedRoot)
 {
@@ -69,13 +89,16 @@ function getVolunteerList(feedRoot)
 		var entry = entries[i];
 		var fullName = entry.getTitle().getText();
 		if (!isDuplicated(fullName)){
-			option = createElementWithText('option', fullName);
+			option = document.createElement('option');
 			option.setAttribute('value', fullName);
+			option.innerHTML = fullName;
+			volunteerBox.appendChild(option);
 			addSortedNodeToElement(volunteerBox, option, false);
 		}
 	}
 
 };
+
 
 function isDuplicated(fullName){
 	currentList = document.getElementsByTagName("option");
