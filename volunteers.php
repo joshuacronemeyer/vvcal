@@ -4,7 +4,7 @@
 
 <?php
 
-echo "<script type='text/javascript' src='http://www.google.com/jsapi?.$key.'></script>";
+echo "<script type='text/javascript' src='$key'></script>";
 
 ?>
 	<script type="text/javascript" src="js/volunteers.js"></script>
