@@ -4,7 +4,6 @@ var SCOPE = 'http://www.google.com/calendar/feeds/';
 var FEED = 'http://www.google.com/calendar/feeds/default/allcalendars/full';
 
 var myService;
-var volunteerList = new Array();
 var volunteerCounter = 0;
 var selectedVolunteerName;
 
@@ -16,18 +15,9 @@ function initVolunteers()
 	var token = google.accounts.user.checkLogin(SCOPE);
 	myService = new google.gdata.calendar.CalendarService("Village Volunteer Calendar");
 
-	if (token) { refreshVillageItinerary(); }
+	if (token) { myService.getAllCalendarsFeed(FEED, handleAllCalendarsForVolunteers, handleError); }
 	
 };
-
-
-function initService()
-{
-	var token = google.accounts.user.checkLogin(SCOPE);
-	myService = new google.gdata.calendar.CalendarService("Village Volunteer Calendar");
-
-	if (token) { refreshVillageItinerary(); }
-}
 
 function handleError(e) 
 {
@@ -48,20 +38,7 @@ function handleError(e)
 }
 
 
-function volunteer(fullName, email, phone) 
-{
-	this.fullName = fullName;
-	this.email = email;
-	this.phone = phone;
-}
-
-function refreshVillageItinerary() {
-
-	myService.getAllCalendarsFeed(FEED, handleAllCalendarsForVillages, handleError);
-
-};
-
-function handleAllCalendarsForVillages(feedRoot)
+function handleAllCalendarsForVolunteers(feedRoot)
 {
 	removeAllChildNodesFrom(document.getElementById('volunteers'));
 	volunteerCounter = 0;

@@ -31,7 +31,6 @@
 		}
 
 		self.location="volunteers.php?firstName=" + firstNameVal + "&middleName=" + middleNameVal + "&lastName=" + lastNameVal;
-		refreshVillageItinerary();
 	}
     </script>
 	<link rel="stylesheet" href="css/style.css" TYPE="text/css" MEDIA="screen">
