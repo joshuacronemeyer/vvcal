@@ -10,6 +10,8 @@
 		if (val.indexOf(" ") == -1)
 		{
 			var firstNameVal = val;
+			var middleNameVal = "none";
+			var lastNameVal = "none";
 		}
 		else
 		{
@@ -18,7 +20,8 @@
 
 			if (remainingName.indexOf(" ") == -1)
 			{
-				var lastNameVal = remainingName
+				var middleNameVal = "none";
+				var lastNameVal = remainingName;
 			}
 			else
 			{
@@ -67,34 +70,38 @@
 	<div id="info" name="info">
 
 <?php
-	if (!empty($_GET['firstName'])){
+	$firstName = $_GET['firstName'];
+	$middleName = $_GET['middleName'];
+	$lastName = $_GET['lastName'];
 
-		$query="select FirstName, MiddleName, LastName, Email, Phone from people where FirstName='".$_GET['firstName']."'";
+	if (!empty($firstName)){
 
-		if (!empty($_GET['lastName'])){
-			$query." and LastName='".$_GET['lastName']."'";
+		$query="select FirstName, MiddleName, LastName, Email, Phone from people where FirstName='".$firstName."'";
+		$fullName = $firstName;
+
+		if (!($middleName == "none")){
+			$query = $query." and MiddleName='".$middleName."'";
+			$fullName = $fullName." ".$middleName;
 		}
 
-		if (!empty($_GET['middleName'])){
-			$query." and MiddleName='".$_GET['middleName']."'";
+		if (!($lastName == "none")){
+			$query = $query." and LastName='".$lastName."'";
+			$fullName = $fullName." ".$lastName;
 		}
 
 		$rt=mysql_query($query);
 		echo mysql_error();
 		$returned_rows = mysql_num_rows($rt);
 		mysql_close($link);
-		$msg = "Volunteer (".$_GET['firstName']." ".$_GET['lastName'].") Not Found";
+
+		$msg = "Volunteer (".$fullName.") Not Found";
 
 		if ($returned_rows == 1){
 			$nt=mysql_fetch_array($rt);
-			if (empty($nt[MiddleName])){
-				$msg = "Name: $nt[FirstName] $nt[LastName]<br>Email: $nt[Email]<br>Phone: $nt[Phone]<br>";
-			} else {
-				$msg = "Name: $nt[FirstName] $nt[MiddleName] $nt[LastName]<br>Email: $nt[Email]<br>Phone: $nt[Phone]<br>";
-			}
+			$msg = "Name: ".$nt[FirstName]." ".$nt[MiddleName]." ".$nt[LastName]."<br>Email: $nt[Email]<br>Phone: $nt[Phone]<br>";
 		}
 		if ($returned_rows > 1){
-			$msg = "Multiple volunteers found with same name: ".$_GET['firstName']." ".$_GET['lastName'];
+			$msg = "Multiple volunteers found with same name: ".$fullName;
 		}
 
 		echo $msg;
