@@ -9,11 +9,13 @@ var volunteerCounter = 0;
 var selectedVolunteerName;
 
 var monthAbbr = initializeMonthArray();
+
+/*
 volunteerList[0] = new volunteer("Select One", "Volunteer Not Selected", "Volunteer Not Selected");
 volunteerList[1] = new volunteer("Jimmy Staggs", "jimmy@twu.com", "111-111-1111");
 volunteerList[2] = new volunteer("Jeremy Stitz", "jeremy@twu.com", "222-222-2222");
 volunteerList[3] = new volunteer("Holly Bowen", "holly@twu.com", "333-333-3333");
-
+*/
 
 function initVolunteers() 
 {
@@ -233,6 +235,7 @@ function addSortedNodeToElement(element, childNodeToInsert, doSortById)
 function initializeMonthArray()
 {
 	var result = new Array();
+	
 	result.push('Jan');
 	result.push('Feb');
 	result.push('Mar');
@@ -245,5 +248,6 @@ function initializeMonthArray()
 	result.push('Oct');
 	result.push('Nov');
 	result.push('Dec');
+	
 	return result;
 };
