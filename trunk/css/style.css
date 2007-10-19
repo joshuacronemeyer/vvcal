@@ -61,7 +61,6 @@ DIV#datesContainer {
 }
 
 .dateButton {
-	margin-top: -2;
 	height: 18;
 	font-family: Tahoma, Arial;
 	font-size: 11;
@@ -104,9 +103,17 @@ td.dateLabel {
 
 TD.leftCol {
 	text-align: left;
+	vertical-align: top;
 	padding-right: 10;
+	padding-bottom: 5;
 }
 
 TD.rightCol {
 	text-align: right;
+	vertical-align: top;
+	padding-bottom: 5;
+}
+
+TD.rightCol SPAN {
+	white-space: nowrap;
 }

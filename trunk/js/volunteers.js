@@ -164,7 +164,7 @@ function handleVolunteerItinerary(feedRoot)
 			
 			var startDate = times[0].getStartTime().getDate();
 			var endDate = new Date(times[0].getEndTime().getDate().getTime() - 1);
-			var dateRangeElement = createElementWithText('td', getDateStringFrom(startDate) + " - " + getDateStringFrom(endDate));
+			var dateRangeElement = createElementWithText('td', getDateStringFrom(startDate) + "<br>to " + getDateStringFrom(endDate));
 			dateRangeElement.setAttribute('class', 'rightCol');
 			entryRowElement.appendChild(dateRangeElement);
 			
@@ -181,7 +181,7 @@ function getDateStringFrom(date)
 	var result = monthAbbr[date.getMonth()];
 	result += " " + dayString;
 	result += " " + date.getFullYear();
-	return result;
+	return "<span>" + result + "</span>";
 	
 };
 
