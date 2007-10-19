@@ -74,7 +74,7 @@
 		$returned_rows = mysql_num_rows($rt);
 		mysql_close($link);
 
-		$msg = "Volunteer (".$fullName.") Not Found";
+		$msg = "Contact Information for ".$fullName." Not Found";
 
 		if ($returned_rows == 1){
 			$nt=mysql_fetch_array($rt);
