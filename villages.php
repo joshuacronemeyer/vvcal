@@ -1,6 +1,12 @@
 <html>
 <head>
-	<script src="http://www.google.com/jsapi?key=ABQIAAAAKYmOqEXuSTJLmIQnR5PK0BT2yXp_ZAY8_ufC3CFXhHIE1NvwkxRY1xD4kh0qjbX_xcdZnGjjKoA4cA" type="text/javascript"></script>
+<?php include 'includes\googlekey.php'; ?>
+
+<?php
+
+echo "<script type='text/javascript' src='http://www.google.com/jsapi?.$key.'></script>";
+
+?>
 	<script type="text/javascript" src="js/villages.js"></script>
 	<script type="text/javascript" src="js/calendarDateInput.js">
 	/***********************************************

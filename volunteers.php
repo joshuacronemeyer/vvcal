@@ -1,6 +1,12 @@
 <html>
 <head>
-	<script type="text/javascript" src="http://www.google.com/jsapi?key=ABQIAAAAKYmOqEXuSTJLmIQnR5PK0BT2yXp_ZAY8_ufC3CFXhHIE1NvwkxRY1xD4kh0qjbX_xcdZnGjjKoA4cA"></script>
+<?php include 'includes\googlekey.php'; ?>
+
+<?php
+
+echo "<script type='text/javascript' src='http://www.google.com/jsapi?.$key.'></script>";
+
+?>
 	<script type="text/javascript" src="js/volunteers.js"></script>
 	<script type="text/javascript">
 	function reload(form)
@@ -39,7 +45,7 @@
 
 	<img src="images/pixel.gif" style="position: absolute; top: -10; left: 0;"/>
 
-<?php include 'dbconfig.php'; ?>
+<?php include 'includes\dbconfig.php'; ?>
 
 	<div align="center">
 		<input type="button" name='volunteerButton' id='volunteerButton' value="List Volunteers" onclick="initVolunteers()" /><br><br>

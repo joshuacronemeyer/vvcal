@@ -99,6 +99,8 @@ td.dateLabel {
 .itineraryTbl {
 	width: 100%;
 	border-collapse: collapse;
+	font-family: Verdana,Sans-Serif;
+	font-size: 11;
 }
 
 .itineraryTbl TD {
@@ -132,5 +134,12 @@ TD.rightCol {
 
 TD.rightCol SPAN {
 	white-space: nowrap;
+}
+
+#itineraryHeader
+{
+	font-weight: bold;
+	font-family: Verdana,Sans-Serif;
+	font-size: 11;
 }
 
