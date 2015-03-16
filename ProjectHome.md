@@ -1,0 +1,1 @@
+This application makes use of Google Calendar to provide an at-a-glance view of volunteer schedules.
